@@ -4,10 +4,9 @@
 function Player (name, highScore, viewStat, profilePic) {
   this.name = name;
   this.highScore = highScore;
-  this.viewStat = viewStat;
   this.profilePic = profilePic;
 
-  Game.players.push ();
+  Game.players.push (this);
 }
 
 function Dictionary (name, listOfWords, alphabet) {
