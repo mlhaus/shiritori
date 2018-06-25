@@ -1,10 +1,10 @@
 'use strict';
 
 //Constructors for player, game, dictionary, settings
-function Player (name, highScore, profilePic) {
+function Player (name, profilePic) {
   this.name = name;
-  this.highScore = highScore;
-  this.profilePic = profilePic;
+  this.highScore = 0;
+  this.profilePic = profilePic || 'img/no-image.jpg';
 
   Game.players.push (this);
 }
@@ -30,3 +30,8 @@ function Settings (secPerTurn, minCharacters, minScore, maxTimeAllowed) {
   this.maxTimeAllowed = maxTimeAllowed;
 }
 
+function initialize(name) {
+  var player1 = new Player(name);
+  var player2 = new Player(name);
+
+}
