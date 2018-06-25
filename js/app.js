@@ -1,7 +1,7 @@
 'use strict';
 
 //Constructors for player, game, dictionary, settings
-function Player (name, highScore, viewStat, profilePic) {
+function Player (name, highScore, profilePic) {
   this.name = name;
   this.highScore = highScore;
   this.profilePic = profilePic;
