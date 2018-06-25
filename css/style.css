@@ -1,0 +1,33 @@
+/* 
+ * #2B2D42 - gunmetal
+ * #8D99AE - grey-blue
+ * #EDF2F4 - anti-flash white
+ * #EF233C - red
+ * #D90429 - candy apple red
+ */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+header {
+  background-color: #2B2D42;
+  padding: 10px;
+}
+
+header h1 {
+  font-family: 'Kaushan Script', cursive;
+  font-size: 3em;
+  color: #EDF2F4;
+  float: left;
+  margin-right: 20px; 
+  padding-right: 20px;
+}
+
+input {
+  font-family: 'Roboto Mono', monospace;
+}
