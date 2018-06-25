@@ -9,29 +9,23 @@ function Player (name, profilePic) {
   Game.players.push (this);
 }
 
-function Dictionary (name, listOfWords, alphabet) {
+function Dictionary (name) {
   this.name = name;
   this.listOfWords = [];
   this.alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 }
 
-function Game (scores, wordsTyped, dictionary, time, players) {
+function Game (dictionary) {
   this.scores = [];
   this.wordsTyped = [];
   this.dictionary = dictionary;
-  this.time = time;
+  this.time = '';
   this.players = [];
 }
 
-function Settings (secPerTurn, minCharacters, minScore, maxTimeAllowed) {
-  this.secPerTurn = secPerTurn;
-  this.minCharacters = minCharacters;
-  this.minScore = minScore;
-  this.maxTimeAllowed = maxTimeAllowed;
-}
-
-function initialize(name) {
+function initialize() {
+  var dict = new Dictionary('English');
+  new Game(dict);
   var player1 = new Player(name);
   var player2 = new Player(name);
-
 }
