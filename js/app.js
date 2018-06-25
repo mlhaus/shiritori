@@ -6,6 +6,8 @@ function Player (name, highScore, viewStat, profilePic) {
   this.highScore = highScore;
   this.viewStat = viewStat;
   this.profilePic = profilePic;
+
+  Game.players.push ();
 }
 
 function Dictionary (name, listOfWords, alphabet) {
@@ -14,11 +16,18 @@ function Dictionary (name, listOfWords, alphabet) {
   this.alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 }
 
-
 function Game (scores, wordsTyped, dictionary, time, players) {
   this.scores = [];
   this.wordsTyped = [];
   this.dictionary = dictionary;
   this.time = time;
-  this.players = ['Player1', 'Player2'];
+  this.players = [];
 }
+
+function Settings (secPerTurn, minCharacters, minScore, maxTimeAllowed) {
+  this.secPerTurn = secPerTurn;
+  this.minCharacters = minCharacters;
+  this.minScore = minScore;
+  this.maxTimeAllowed = maxTimeAllowed;
+}
+
