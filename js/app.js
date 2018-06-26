@@ -87,6 +87,7 @@ form.addEventListener('submit',function(event){
     changeScore(input.length);
     var errorString = '';
     insertError(errorString);
+    clearsInput();
     console.log('is not broke');
   }
   else{
