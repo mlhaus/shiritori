@@ -2,6 +2,8 @@
 var player1;
 var player2;
 var currentPlayer = player1;
+var startingLetter;
+var userWord = document.getElementById('word');
 
 
 //Constructors for player, game, dictionary, settings
@@ -41,9 +43,11 @@ var form= document.querySelector('form');
 form.addEventListener('submit',function(event){
   event.preventDefault();
   var input=event.target.word.value;
-  console.log(!wordsTyped.includes(input))
-  if(listOfWords.includes(input)&&!wordsTyped.includes(input){
-    ;
+  // console.log(!wordsTyped.includes(input))
+  // if(listOfWords.includes(input)&&!wordsTyped.includes(input){
+  //   ;
+
+  
 });
   
 function initialize() {
@@ -51,6 +55,8 @@ function initialize() {
   new Game(dict);
   player1 = new Player(name);
   player2 = new Player(name);
+  startingLetter = Math.floor(Math.random() * dict.alphabet.length);
+  userWord.setAttribute('placeholder', dict.alphabet[startingLetter]);
 }
 
 initialize();
