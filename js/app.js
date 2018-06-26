@@ -16,8 +16,8 @@ var restartButton = document.getElementById('restartButton');
 var newGameButton = document.getElementById('newGameButton');
 var highScoreButton = document.getElementById('highScoreButton');
 var pauseButton = document.getElementById('pauseButton');
-var p1ScoreElement =document.querySelector('#player1Score h4');
-var p2ScoreElement =document.querySelector('#player2Score h4');
+var p1ScoreElement =document.getElementById('player1Score');
+var p2ScoreElement =document.getElementById('player2Score');
 var p1Score;
 var p2Score;
 
@@ -59,11 +59,10 @@ function changeScore(lengthOfWord) {
   // TODO ADD THE SECONDS REMAINING TO PARAMETER LIST
   if(currentPlayer === player1) {
     p1Score += lengthOfWord - minNumbCharacters;
-    
-    console.log(p1Score);
+    p1ScoreElement.lastElementChild.textContent = p1Score;
   } else {
     p2Score += lengthOfWord - minNumbCharacters;
-    console.log(p2Score);
+    p2ScoreElement.lastElementChild.textContent = p2Score;
   }
 }
 
