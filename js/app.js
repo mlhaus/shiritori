@@ -84,7 +84,7 @@ function changeScore(lengthOfWord) {
   }
   var gameOver = isGameOver();
   if (gameOver){
-    gameOverScreen.classList.remove("hidden");
+    gameOverScreen.classList.remove('hidden');
   } else {
     switchPlayer();
   }
@@ -101,6 +101,7 @@ form.addEventListener('submit',function(event){
     Game.wordsTyped.push(input);
     letter=input.charAt(input.length-1);
     userWord.setAttribute('placeholder', letter);
+    listMaker5000(input);
     changeScore(input.length);
     var errorString = '';
     insertError(errorString);
@@ -112,9 +113,24 @@ form.addEventListener('submit',function(event){
     console.log('something is broke');
     console.log(letter);
     errorString = errorMesssage(input);
-    insertError(errorString); 
+    insertError(errorString);
   }
 });
+
+function listMaker5000(input){
+  if(currentPlayer===player1){
+    var ul=document.getElementById('player1words');
+    var li=document.createElement('li');
+    li.textContent=input;
+    ul.appendChild(li);
+  }
+  if(currentPlayer===player2){
+    ul=document.getElementById('player2words');
+    li=document.createElement('li');
+    li.textContent=input;
+    ul.appendChild(li);
+  }
+}
 
 function errorMesssage(input){
   if(!input.startsWith(letter)){
