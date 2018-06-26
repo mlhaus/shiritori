@@ -39,7 +39,10 @@
           </section>
           <section id="gameInput" class="col">
             <form>
-              <input type="text" id="word" name="word" minLength="3" required>
+              <label>
+                <p id='errorMessage'></p>
+                <input type="text" id="word" name="word" minLength="3" required>
+              </label>
               <input type="submit" value="submit">
             </form>
             <button id="pauseButton">Pause</button>

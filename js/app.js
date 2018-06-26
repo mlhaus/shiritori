@@ -68,23 +68,61 @@ form.addEventListener('submit',function(event){
     listOfWords.splice(listOfWords.indexOf(input),1);
     Game.wordsTyped.push(input);
     letter=input.charAt(input.length-1);
+    var errorString = '';
+    insertError(errorString);
     //score adjust needs time left over
-    Game.scores=input.length-3
+    Game.scores=input.length-3;
     console.log('is not broke');
+    
+
   }
   else{
+    console.log(input);
     console.log('something is broke');
+    
+    console.log(letter);
+    errorString = errorMesssage(input);
+    insertError(errorString);
+    
   }
   
 });
+function errorMesssage(input){
+  if(!input.startsWith(letter)){
+    clearsInput();
+    return 'Start with ' + letter;
+  }
+  if(Game.wordsTyped.includes(input)){
+    clearsInput();
+    return 'Word already used!';
+  }
+  if(!listOfWords.includes(input)){
+    return 'Not a word';
+  }
+  else{
+    return 'Error Message Broke';
+  }
+
+}
+function clearsInput(){
+  var inputTag = document.getElementById('word');
+  inputTag.value = '';
+}
+function insertError(errorString){
+  //may need to come back and add id to input rather than querySelector
+
+  var p = document.getElementById('errorMessage');
+  p.textContent= errorString;
+  
+}
   
 function playGame() {
   dict = new Dictionary('English');
   game = new Game(dict);
   player1 = new Player(name);
   player2 = new Player(name);
-  letter = Math.floor(Math.random() * dict.alphabet.length);
-  userWord.setAttribute('placeholder', dict.alphabet[letter]);
+  letter = dict.alphabet[Math.floor(Math.random() * dict.alphabet.length)];
+  userWord.setAttribute('placeholder', letter);
   welcomeScreen.classList.add("hidden");
   pauseScreen.classList.add("hidden");
   
@@ -104,7 +142,6 @@ function initialize() {
   welcomeScreen.classList.remove("hidden");
   pauseScreen.classList.add("hidden");
   gameOverScreen.classList.add("hidden");
-  
 }
 
 playButton.addEventListener("click", playGame);
