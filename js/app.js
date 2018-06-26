@@ -1,6 +1,7 @@
 'use strict';
 var dict;
 var minNumbCharacters;
+var minScoreToWin;
 var game;
 var player1;
 var player2;
@@ -54,6 +55,13 @@ function Dictionary (name) {
 }
 var listOfWords = getFakeWords();
 
+
+function isGameOver (){
+  return game.scores[0] >= minScoreToWin || game.scores[1] >= minScoreToWin;
+  //TODO  Determine if the timer is expired
+}
+
+
 function changeScore(lengthOfWord) {
   // TODO ADD THE SECONDS REMAINING TO PARAMETER LIST
   if(currentPlayer === player1) {
@@ -62,6 +70,10 @@ function changeScore(lengthOfWord) {
   } else {
     game.scores[1] += lengthOfWord - minNumbCharacters;
     p2ScoreElement.lastElementChild.textContent = game.scores[1];
+  }
+  var gameOver = isGameOver();
+  if (gameOver){
+    gameOverScreen.classList.remove("hidden");
   }
 }
 
@@ -129,15 +141,18 @@ function insertError(errorString){
 function playGame() {
   dict = new Dictionary('English');
   game = new Game(dict);
+  p1ScoreElement.lastElementChild.textContent = game.scores[0];
+  p2ScoreElement.lastElementChild.textContent = game.scores[1];
   player1 = new Player(name);
   player2 = new Player(name);
   currentPlayer = player1;
   minNumbCharacters = 3;
+  minScoreToWin = 1;
   letter = dict.alphabet[Math.floor(Math.random() * dict.alphabet.length)];
   userWord.setAttribute('placeholder', letter);
   welcomeScreen.classList.add("hidden");
   pauseScreen.classList.add("hidden");
-  
+  gameOverScreen.classList.add("hidden");
 }
 
 function pauseGame() {
@@ -161,3 +176,4 @@ pauseButton.addEventListener("click", pauseGame);
 continueButton.addEventListener("click", continueGame);
 restartButton.addEventListener("click", playGame);
 window.addEventListener("load", initialize);
+newGameButton.addEventListener("click", playGame);
