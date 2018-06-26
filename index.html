@@ -26,10 +26,12 @@
       </header>
       <main>
         <div class="row">
-          <section id="player1score" class="col">
+          <section id="player1score" class="col current">
+            Player 1
           </section>
           <section id="timeremaining" class="col"></section>
           <section id="player2score" class="col">
+            Player 2
           </section>
         </div>
         <div class="row">
@@ -37,7 +39,7 @@
           </section>
           <section id="gameInput" class="col">
             <form>
-              <input type="text" name="word" minLength="3" required>
+              <input type="text" id="word" name="word" minLength="3" required>
               <input type="submit" value="submit">
             </form>
           </section>

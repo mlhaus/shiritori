@@ -1,4 +1,10 @@
 'use strict';
+var player1;
+var player2;
+var currentPlayer = player1;
+var startingLetter;
+var userWord = document.getElementById('word');
+
 
 //Constructors for player, game, dictionary, settings
 function Game (dictionary) {
@@ -24,14 +30,15 @@ function Dictionary (name) {
 }
 var listOfWords = ['tiger','rabbit','rhino'];
 
-function initialize() {
-  var dict = new Dictionary('English');
-  new Game(dict);
-  var player1 = new Player('bob');
-  var player2 = new Player('name');
-}
 
-initialize();
+
+function switchPlayer() {
+  if(currentPlayer == player1) {
+    currentPlayer = player2;
+  } else {
+    currentPlayer = player1;
+  }
+}
 
 var form= document.querySelector('form');
 form.addEventListener('submit',function(event){
@@ -48,4 +55,16 @@ form.addEventListener('submit',function(event){
   else{
     console.log('something is broke');
   }
+  
 });
+  
+function initialize() {
+  var dict = new Dictionary('English');
+  new Game(dict);
+  player1 = new Player(name);
+  player2 = new Player(name);
+  startingLetter = Math.floor(Math.random() * dict.alphabet.length);
+  userWord.setAttribute('placeholder', dict.alphabet[startingLetter]);
+}
+
+initialize();
