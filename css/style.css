@@ -81,7 +81,25 @@ header nav li a:hover {
 }
 
 main .row {
+  margin-top: 0.5em;
+}
+
+main .row:last-of-type {
+  margin-bottom: 0.5em;
+}
+
+main .row .col {
+  border: 1px solid red;
+  float: left;
+  width: 32%;
+  margin-left: 1%;
   min-height: 10vh;
+  border-radius: 10px;
+  border: 1px solid #8D99AE;
+}
+
+main .row .col:last-of-type {
+  margin-right: 1%;
 }
 
 footer {
