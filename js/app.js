@@ -14,6 +14,7 @@ var continueButton = document.getElementById('continueButton');
 var restartButton = document.getElementById('restartButton');
 var newGameButton = document.getElementById('newGameButton');
 var highScoreButton = document.getElementById('highScoreButton');
+var pauseButton = document.getElementById('pauseButton');
 
 function getFakeWords() {
   var arr = [];
@@ -85,6 +86,18 @@ function playGame() {
   letter = Math.floor(Math.random() * dict.alphabet.length);
   userWord.setAttribute('placeholder', dict.alphabet[letter]);
   welcomeScreen.classList.add("hidden");
+  pauseScreen.classList.add("hidden");
+  
+}
+
+function pauseGame() {
+  // TODO Stop Timer Function
+  pauseScreen.classList.remove("hidden");
+}
+
+function continueGame(){
+  // TODO Continue Timer Function
+  pauseScreen.classList.add("hidden");
 }
 
 function initialize() {
@@ -95,5 +108,7 @@ function initialize() {
 }
 
 playButton.addEventListener("click", playGame);
-
+pauseButton.addEventListener("click", pauseGame);
+continueButton.addEventListener("click", continueGame);
+restartButton.addEventListener("click", playGame);
 window.addEventListener("load", initialize);
