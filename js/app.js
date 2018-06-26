@@ -101,7 +101,7 @@ function continueGame(){
 }
 
 function initialize() {
-  welcomeScreen.classList.remove("hidden");
+  welcomeScreen.classList.add("hidden");
   pauseScreen.classList.add("hidden");
   gameOverScreen.classList.add("hidden");
   
