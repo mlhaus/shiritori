@@ -93,14 +93,12 @@ form.addEventListener('submit',function(event){
   else{
     console.log(input);
     console.log('something is broke');
-    
     console.log(letter);
     errorString = errorMesssage(input);
-    insertError(errorString);
-    
+    insertError(errorString); 
   }
-  
 });
+
 function errorMesssage(input){
   if(!input.startsWith(letter)){
     clearsInput();
@@ -116,20 +114,18 @@ function errorMesssage(input){
   else{
     return 'Error Message Broke';
   }
-
 }
+
 function clearsInput(){
   var inputTag = document.getElementById('word');
   inputTag.value = '';
 }
-function insertError(errorString){
-  //may need to come back and add id to input rather than querySelector
 
+function insertError(errorString){
   var p = document.getElementById('errorMessage');
   p.textContent= errorString;
-  
 }
-  
+
 function playGame() {
   dict = new Dictionary('English');
   game = new Game(dict);
@@ -141,29 +137,28 @@ function playGame() {
   p2Score = 0;
   letter = dict.alphabet[Math.floor(Math.random() * dict.alphabet.length)];
   userWord.setAttribute('placeholder', letter);
-  welcomeScreen.classList.add("hidden");
-  pauseScreen.classList.add("hidden");
-  
+  welcomeScreen.classList.add('hidden');
+  pauseScreen.classList.add('hidden');
 }
 
 function pauseGame() {
   // TODO Stop Timer Function
-  pauseScreen.classList.remove("hidden");
+  pauseScreen.classList.remove('hidden');
 }
 
 function continueGame(){
   // TODO Continue Timer Function
-  pauseScreen.classList.add("hidden");
+  pauseScreen.classList.add('hidden');
 }
 
 function initialize() {
-  welcomeScreen.classList.remove("hidden");
-  pauseScreen.classList.add("hidden");
-  gameOverScreen.classList.add("hidden");
+  welcomeScreen.classList.remove('hidden');
+  pauseScreen.classList.add('hidden');
+  gameOverScreen.classList.add('hidden');
 }
 
-playButton.addEventListener("click", playGame);
-pauseButton.addEventListener("click", pauseGame);
-continueButton.addEventListener("click", continueGame);
-restartButton.addEventListener("click", playGame);
-window.addEventListener("load", initialize);
+playButton.addEventListener('click', playGame);
+pauseButton.addEventListener('click', pauseGame);
+continueButton.addEventListener('click', continueGame);
+restartButton.addEventListener('click', playGame);
+window.addEventListener('load', initialize);
