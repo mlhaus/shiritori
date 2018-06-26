@@ -2,8 +2,18 @@
 var player1;
 var player2;
 var currentPlayer = player1;
-var startingLetter;
+var letter;
 var userWord = document.getElementById('word');
+
+function getFakeWords() {
+  var arr = [];
+  for(var i = 97; i <= 122; i++) {
+    for(var j = 97; j <= 122; j++) {
+      arr.push(String.fromCharCode(i) + 'xx'+ String.fromCharCode(j));
+    }
+  }
+  return arr;
+}
 
 
 //Constructors for player, game, dictionary, settings
@@ -13,7 +23,6 @@ function Game (dictionary) {
   this.time = '';
 }
 Game.wordsTyped = [];
-var letter='t';
 Game.players = [];
 
 function Player (name, profilePic) {
@@ -28,7 +37,7 @@ function Dictionary (name) {
   this.name = name;
   this.alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 }
-var listOfWords = ['tiger','rabbit','rhino'];
+var listOfWords = getFakeWords();
 
 
 
@@ -63,8 +72,8 @@ function initialize() {
   new Game(dict);
   player1 = new Player(name);
   player2 = new Player(name);
-  startingLetter = Math.floor(Math.random() * dict.alphabet.length);
-  userWord.setAttribute('placeholder', dict.alphabet[startingLetter]);
+  letter = Math.floor(Math.random() * dict.alphabet.length);
+  userWord.setAttribute('placeholder', dict.alphabet[letter]);
 }
 
 initialize();
