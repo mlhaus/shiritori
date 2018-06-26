@@ -1,9 +1,20 @@
 'use strict';
+var dict;
+var game;
 var player1;
 var player2;
 var currentPlayer = player1;
 var letter;
 var userWord = document.getElementById('word');
+var welcomeScreen = document.getElementById('welcome');
+var pauseScreen = document.getElementById('pause');
+var gameOverScreen = document.getElementById('game_over');
+var playButton = document.getElementById('playButton');
+var continueButton = document.getElementById('continueButton');
+var restartButton = document.getElementById('restartButton');
+var newGameButton = document.getElementById('newGameButton');
+var highScoreButton = document.getElementById('highScoreButton');
+var pauseButton = document.getElementById('pauseButton');
 
 function getFakeWords() {
   var arr = [];
@@ -67,13 +78,37 @@ form.addEventListener('submit',function(event){
   
 });
   
-function initialize() {
-  var dict = new Dictionary('English');
-  new Game(dict);
+function playGame() {
+  dict = new Dictionary('English');
+  game = new Game(dict);
   player1 = new Player(name);
   player2 = new Player(name);
   letter = Math.floor(Math.random() * dict.alphabet.length);
   userWord.setAttribute('placeholder', dict.alphabet[letter]);
+  welcomeScreen.classList.add("hidden");
+  pauseScreen.classList.add("hidden");
+  
 }
 
-initialize();
+function pauseGame() {
+  // TODO Stop Timer Function
+  pauseScreen.classList.remove("hidden");
+}
+
+function continueGame(){
+  // TODO Continue Timer Function
+  pauseScreen.classList.add("hidden");
+}
+
+function initialize() {
+  welcomeScreen.classList.remove("hidden");
+  pauseScreen.classList.add("hidden");
+  gameOverScreen.classList.add("hidden");
+  
+}
+
+playButton.addEventListener("click", playGame);
+pauseButton.addEventListener("click", pauseGame);
+continueButton.addEventListener("click", continueGame);
+restartButton.addEventListener("click", playGame);
+window.addEventListener("load", initialize);
