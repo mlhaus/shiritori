@@ -34,6 +34,7 @@ header {
 }
 
 header:after,
+footer:after,
 .row:after {
   content: "";
   clear: both;
@@ -86,6 +87,26 @@ main .row {
 footer {
   background-color: #2B2D42;
   padding: 10px;
+  color: #EDF2F4;
+}
+
+footer nav {
+  float: left;
+}
+
+footer nav a {
+  display: block;
+  color: #EDF2F4;
+  text-decoration: none;
+  margin-right: 0.5em;
+}
+
+footer nav a:hover {
+  text-decoration: underline;
+}
+
+footer p {
+  float: right;
 }
 
 input {
