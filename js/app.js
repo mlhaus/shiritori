@@ -68,7 +68,8 @@ form.addEventListener('submit',function(event){
     console.log('something is broke');
     
     console.log(letter);
-    console.log(errorMesssage(input));
+    var errorString = errorMesssage(input);
+    insertError(errorString);
     
   }
   
@@ -87,6 +88,13 @@ function errorMesssage(input){
     return 'Error Message Broke';
   }
 
+}
+function insertError(errorString){
+  //may need to come back and add id to input rather than querySelector
+  var inputNode = document.querySelector('input');
+  var p = document.createElement('p');
+  p.textContent= errorString;
+  inputNode.parentElement.insertBefore(p, inputNode);
 }
   
 function initialize() {
