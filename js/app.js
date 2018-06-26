@@ -18,8 +18,7 @@ var highScoreButton = document.getElementById('highScoreButton');
 var pauseButton = document.getElementById('pauseButton');
 var p1ScoreElement =document.getElementById('player1Score');
 var p2ScoreElement =document.getElementById('player2Score');
-var p1Score;
-var p2Score;
+
 
 function getFakeWords() {
   var arr = [];
@@ -34,7 +33,7 @@ function getFakeWords() {
 
 //Constructors for player, game, dictionary, settings
 function Game (dictionary) {
-  this.scores = [];
+  this.scores = [0, 0];
   this.dictionary = dictionary;
   this.time = '';
 }
@@ -57,13 +56,12 @@ var listOfWords = getFakeWords();
 
 function changeScore(lengthOfWord) {
   // TODO ADD THE SECONDS REMAINING TO PARAMETER LIST
-  //    Game.scores=input.length-3;
   if(currentPlayer === player1) {
-    p1Score += lengthOfWord - minNumbCharacters;
-    p1ScoreElement.lastElementChild.textContent = p1Score;
+    game.scores[0] += lengthOfWord - minNumbCharacters;
+    p1ScoreElement.lastElementChild.textContent = game.scores[0];
   } else {
-    p2Score += lengthOfWord - minNumbCharacters;
-    p2ScoreElement.lastElementChild.textContent = p2Score;
+    game.scores[1] += lengthOfWord - minNumbCharacters;
+    p2ScoreElement.lastElementChild.textContent = game.scores[1];
   }
 }
 
@@ -135,8 +133,6 @@ function playGame() {
   player2 = new Player(name);
   currentPlayer = player1;
   minNumbCharacters = 3;
-  p1Score = 0;
-  p2Score = 0;
   letter = dict.alphabet[Math.floor(Math.random() * dict.alphabet.length)];
   userWord.setAttribute('placeholder', letter);
   welcomeScreen.classList.add("hidden");
