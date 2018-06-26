@@ -1,4 +1,8 @@
 'use strict';
+var player1;
+var player2;
+var currentPlayer = player1;
+
 
 //Constructors for player, game, dictionary, settings
 function Game (dictionary) {
@@ -23,14 +27,15 @@ function Dictionary (name) {
 }
 var listOfWords = ['tiger','rabbit','rhino'];
 
-function initialize() {
-  var dict = new Dictionary('English');
-  new Game(dict);
-  var player1 = new Player('bob');
-  var player2 = new Player('name');
-}
 
-initialize();
+
+function switchPlayer() {
+  if(currentPlayer == player1) {
+    currentPlayer = player2;
+  } else {
+    currentPlayer = player1;
+  }
+}
 
 var form= document.querySelector('form');
 form.addEventListener('submit',function(event){
@@ -40,3 +45,14 @@ form.addEventListener('submit',function(event){
   if(listOfWords.includes(input)&&!wordsTyped.includes(input){
     ;
 });
+  
+function initialize() {
+  var dict = new Dictionary('English');
+  new Game(dict);
+  player1 = new Player(name);
+  player2 = new Player(name);
+}
+
+initialize();
+
+
