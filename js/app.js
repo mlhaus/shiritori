@@ -83,6 +83,7 @@ form.addEventListener('submit',function(event){
     listOfWords.splice(listOfWords.indexOf(input),1);
     Game.wordsTyped.push(input);
     letter=input.charAt(input.length-1);
+    userWord.setAttribute('placeholder', letter);
     changeScore(input.length);
     var errorString = '';
     insertError(errorString);
