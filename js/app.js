@@ -61,6 +61,17 @@ function isGameOver (){
   //TODO  Determine if the timer is expired
 }
 
+function switchPlayer() {
+  if(currentPlayer === player1) {
+    currentPlayer = player2;
+    p2ScoreElement.classList.add('current');
+    p1ScoreElement.classList.remove('current');
+  } else {
+    currentPlayer = player1;
+    p2ScoreElement.classList.remove('current');
+    p1ScoreElement.classList.add('current');
+  }
+}
 
 function changeScore(lengthOfWord) {
   // TODO ADD THE SECONDS REMAINING TO PARAMETER LIST
@@ -74,16 +85,12 @@ function changeScore(lengthOfWord) {
   var gameOver = isGameOver();
   if (gameOver){
     gameOverScreen.classList.remove("hidden");
+  } else {
+    switchPlayer();
   }
 }
 
-function switchPlayer() {
-  if(currentPlayer === player1) {
-    currentPlayer = player2;
-  } else {
-    currentPlayer = player1;
-  }
-}
+
 
 var form= document.querySelector('form');
 form.addEventListener('submit',function(event){
@@ -146,8 +153,10 @@ function playGame() {
   player1 = new Player(name);
   player2 = new Player(name);
   currentPlayer = player1;
+  p2ScoreElement.classList.remove('current');
+  p1ScoreElement.classList.add('current');
   minNumbCharacters = 3;
-  minScoreToWin = 1;
+  minScoreToWin = 100;
   letter = dict.alphabet[Math.floor(Math.random() * dict.alphabet.length)];
   userWord.setAttribute('placeholder', letter);
   welcomeScreen.classList.add("hidden");
