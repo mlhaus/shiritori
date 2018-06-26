@@ -9,10 +9,11 @@ var userWord = document.getElementById('word');
 //Constructors for player, game, dictionary, settings
 function Game (dictionary) {
   this.scores = [];
-  this.wordsTyped = ['tiger'];
   this.dictionary = dictionary;
   this.time = '';
 }
+Game.wordsTyped = [];
+var letter='t';
 Game.players = [];
 
 function Player (name, profilePic) {
@@ -43,10 +44,17 @@ var form= document.querySelector('form');
 form.addEventListener('submit',function(event){
   event.preventDefault();
   var input=event.target.word.value;
-  // console.log(!wordsTyped.includes(input))
-  // if(listOfWords.includes(input)&&!wordsTyped.includes(input){
-  //   ;
-
+  if(listOfWords.includes(input)&&!Game.wordsTyped.includes(input)&&input.startsWith(letter)){
+    listOfWords.splice(listOfWords.indexOf(input),1);
+    Game.wordsTyped.push(input);
+    letter=input.charAt(input.length-1);
+    //score adjust needs time left over
+    Game.scores=input.length-3
+    console.log('is not broke');
+  }
+  else{
+    console.log('something is broke');
+  }
   
 });
   
@@ -60,5 +68,3 @@ function initialize() {
 }
 
 initialize();
-
-
