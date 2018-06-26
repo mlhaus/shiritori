@@ -1,9 +1,14 @@
 'use strict';
+var dict;
+var game;
 var player1;
 var player2;
 var currentPlayer = player1;
 var letter;
 var userWord = document.getElementById('word');
+var welcomeScreen = document.getElementById('welcome');
+var pauseScreen = document.getElementById('pause');
+var gameOverScreen = document.getElementById('game_over');
 
 function getFakeWords() {
   var arr = [];
@@ -68,12 +73,15 @@ form.addEventListener('submit',function(event){
 });
   
 function initialize() {
-  var dict = new Dictionary('English');
-  new Game(dict);
+  welcomeScreen.classList.remove("hidden");
+  pauseScreen.classList.add("hidden");
+  gameOverScreen.classList.add("hidden");
+  dict = new Dictionary('English');
+  game = new Game(dict);
   player1 = new Player(name);
   player2 = new Player(name);
   letter = Math.floor(Math.random() * dict.alphabet.length);
   userWord.setAttribute('placeholder', dict.alphabet[letter]);
 }
 
-initialize();
+window.addEventListener("load", initialize);
