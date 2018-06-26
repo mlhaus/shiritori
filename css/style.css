@@ -171,6 +171,13 @@ input {
   width: 400px;
   margin: 100px auto;
   text-align: center;
-  padding: 25px;
+  padding: 20px;
   border-radius: 10px;
+}
+.outer h2 {
+  font-family: 'Kaushan Script', cursive;
+  font-size: 2em;
+  /* border: 1px solid black; */
+  padding: 5px;
+  margin: 5px;
 }
