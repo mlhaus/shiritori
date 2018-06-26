@@ -64,14 +64,30 @@ form.addEventListener('submit',function(event){
 
   }
   else{
+    console.log(input);
     console.log('something is broke');
-    console.log(listOfWords.includes(input));
-    console.log(!Game.wordsTyped.includes(input));
-    console.log(input.startsWith(letter));
+    
     console.log(letter);
+    console.log(errorMesssage(input));
+    
   }
   
 });
+function errorMesssage(input){
+  if(!input.startsWith(letter)){
+    return 'Start with ' + letter;
+  }
+  if(Game.wordsTyped.includes(input)){
+    return 'Word already used!';
+  }
+  if(!listOfWords.includes(input)){
+    return 'Not a word';
+  }
+  else{
+    return 'Error Message Broke';
+  }
+
+}
   
 function initialize() {
   var dict = new Dictionary('English');
