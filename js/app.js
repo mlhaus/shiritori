@@ -1,6 +1,7 @@
 'use strict';
 var dict;
 var minNumbCharacters;
+var minScoreToWin;
 var game;
 var player1;
 var player2;
@@ -18,8 +19,7 @@ var highScoreButton = document.getElementById('highScoreButton');
 var pauseButton = document.getElementById('pauseButton');
 var p1ScoreElement =document.getElementById('player1Score');
 var p2ScoreElement =document.getElementById('player2Score');
-var p1Score;
-var p2Score;
+
 
 function getFakeWords() {
   var arr = [];
@@ -34,7 +34,7 @@ function getFakeWords() {
 
 //Constructors for player, game, dictionary, settings
 function Game (dictionary) {
-  this.scores = [];
+  this.scores = [0, 0];
   this.dictionary = dictionary;
   this.time = '';
 }
@@ -55,25 +55,42 @@ function Dictionary (name) {
 }
 var listOfWords = getFakeWords();
 
-function changeScore(lengthOfWord) {
-  // TODO ADD THE SECONDS REMAINING TO PARAMETER LIST
-  //    Game.scores=input.length-3;
-  if(currentPlayer === player1) {
-    p1Score += lengthOfWord - minNumbCharacters;
-    p1ScoreElement.lastElementChild.textContent = p1Score;
-  } else {
-    p2Score += lengthOfWord - minNumbCharacters;
-    p2ScoreElement.lastElementChild.textContent = p2Score;
-  }
+
+function isGameOver (){
+  return game.scores[0] >= minScoreToWin || game.scores[1] >= minScoreToWin;
+  //TODO  Determine if the timer is expired
 }
 
 function switchPlayer() {
   if(currentPlayer === player1) {
     currentPlayer = player2;
+    p2ScoreElement.classList.add('current');
+    p1ScoreElement.classList.remove('current');
   } else {
     currentPlayer = player1;
+    p2ScoreElement.classList.remove('current');
+    p1ScoreElement.classList.add('current');
   }
 }
+
+function changeScore(lengthOfWord) {
+  // TODO ADD THE SECONDS REMAINING TO PARAMETER LIST
+  if(currentPlayer === player1) {
+    game.scores[0] += lengthOfWord - minNumbCharacters;
+    p1ScoreElement.lastElementChild.textContent = game.scores[0];
+  } else {
+    game.scores[1] += lengthOfWord - minNumbCharacters;
+    p2ScoreElement.lastElementChild.textContent = game.scores[1];
+  }
+  var gameOver = isGameOver();
+  if (gameOver){
+    gameOverScreen.classList.remove("hidden");
+  } else {
+    switchPlayer();
+  }
+}
+
+
 
 var form= document.querySelector('form');
 form.addEventListener('submit',function(event){
@@ -129,16 +146,20 @@ function insertError(errorString){
 function playGame() {
   dict = new Dictionary('English');
   game = new Game(dict);
+  p1ScoreElement.lastElementChild.textContent = game.scores[0];
+  p2ScoreElement.lastElementChild.textContent = game.scores[1];
   player1 = new Player(name);
   player2 = new Player(name);
   currentPlayer = player1;
+  p2ScoreElement.classList.remove('current');
+  p1ScoreElement.classList.add('current');
   minNumbCharacters = 3;
-  p1Score = 0;
-  p2Score = 0;
+  minScoreToWin = 100;
   letter = dict.alphabet[Math.floor(Math.random() * dict.alphabet.length)];
   userWord.setAttribute('placeholder', letter);
   welcomeScreen.classList.add('hidden');
   pauseScreen.classList.add('hidden');
+  gameOverScreen.classList.add('hidden');
 }
 
 function pauseGame() {
@@ -162,3 +183,4 @@ pauseButton.addEventListener('click', pauseGame);
 continueButton.addEventListener('click', continueGame);
 restartButton.addEventListener('click', playGame);
 window.addEventListener('load', initialize);
+newGameButton.addEventListener('click', playGame);
