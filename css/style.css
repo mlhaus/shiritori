@@ -10,15 +10,27 @@
   box-sizing: border-box;
 }
 
+html {
+  height: 100%;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
+  background-image: url('../assets/dictionary.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+}
+
+#container {
+  min-height: 100vh;
+  background-color: rgba(237,242,244,0.95);
 }
 
 header {
   background-color: #2B2D42;
   padding: 10px;
-  content: "";
-  position: relative;
 }
 
 header:after,
@@ -67,6 +79,19 @@ header nav li a:hover {
   box-shadow: 0px 0px 10px 5px rgba(237,242,244,1);
 }
 
+main .row {
+  min-height: 10vh;
+}
+
+footer {
+  background-color: #2B2D42;
+  padding: 10px;
+}
+
 input {
   font-family: 'Roboto Mono', monospace;
+}
+
+.hidden {
+  display: none;
 }

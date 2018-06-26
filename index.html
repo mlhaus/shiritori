@@ -11,58 +11,55 @@
     <link href="css/style.css" rel="stylesheet">
   </head>
   <body>
-    <header>
-      <h1>
-        Shiritori
-      </h1>
-      <nav>
-        <ul>
-          <li><a href="index.html" class="active">Play</a></li>
-          <li><a href="instructions.html">Instructions</a></li>
-          <li><a href="about.html">About Us</a></li>
-        </ul>
-      </nav>
-    </header>
-    <main>
-      <div class = "row">
-        <section id="player1score" class="col">
-        </section>
-        <section id="timeremaining" class="col"></section>
-        <section id="player2score" class="col">
-        </section>
-      </div>
-      <div class = "row">
-        <section id="player1words" class="col">
-        </section>
-        <section id="gameInput" class="col"></section>
-        <section id="player2words" class="col">
-        </section>
-      </div>
-    </main>
-    <footer>
-      <nav>
-        <a href="leaderboard.html">Leaderboard</a>
-      </nav>
-      &copy; Shiritori Team DeltaV
-    </footer>
+    <div id="container">
+      <header>
+        <h1>
+          Shiritori
+        </h1>
+        <nav>
+          <ul>
+            <li><a href="index.html" class="active">Play</a></li>
+            <li><a href="instructions.html">Instructions</a></li>
+            <li><a href="about.html">About Us</a></li>
+          </ul>
+        </nav>
+      </header>
+      <main>
+        <div class="row">
+          <section id="player1score" class="col">
+          </section>
+          <section id="timeremaining" class="col"></section>
+          <section id="player2score" class="col">
+          </section>
+        </div>
+        <div class="row">
+          <section id="player1words" class="col">
+          </section>
+          <section id="gameInput" class="col"></section>
+          <section id="player2words" class="col">
+          </section>
+        </div>
+      </main>
+      <footer>
+        <nav>
+          <a href="leaderboard.html">Leaderboard</a>
+        </nav>
+        &copy; Shiritori Team DeltaV
+      </footer>
+    </div>
 
-
-    <div id="welcome" class="outer">
+    <div id="welcome" class="outer hidden">
       <div class="inner">
-        <h2>
-          Welcome to Shiritori
-        </h2>
+        <h2>Welcome to Shiritori</h2>
         <!-- Input names will go here-->
         <h3>Player One</h3>
         <h3>Player Two</h3>
         <button id="playButton">PLAY</button>
       </div>
     </div>
-    <div id = "pause" class = "outer">
-      <div class = "inner">
-        <h2>
-          Game Paused
-        </h2>
+    <div id="pause" class="outer hidden">
+      <div class="inner">
+        <h2>Game Paused</h2>
         <button id="continueButton">continue</button>
         <button id="restartButton">restart</button>
       </div>
