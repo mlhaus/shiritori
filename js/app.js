@@ -57,6 +57,8 @@ form.addEventListener('submit',function(event){
     listOfWords.splice(listOfWords.indexOf(input),1);
     Game.wordsTyped.push(input);
     letter=input.charAt(input.length-1);
+    var errorString = '';
+    insertError(errorString);
     //score adjust needs time left over
     Game.scores=input.length-3;
     console.log('is not broke');
@@ -68,7 +70,7 @@ form.addEventListener('submit',function(event){
     console.log('something is broke');
     
     console.log(letter);
-    var errorString = errorMesssage(input);
+    errorString = errorMesssage(input);
     insertError(errorString);
     
   }
@@ -76,9 +78,11 @@ form.addEventListener('submit',function(event){
 });
 function errorMesssage(input){
   if(!input.startsWith(letter)){
+    clearsInput();
     return 'Start with ' + letter;
   }
   if(Game.wordsTyped.includes(input)){
+    clearsInput();
     return 'Word already used!';
   }
   if(!listOfWords.includes(input)){
@@ -89,12 +93,16 @@ function errorMesssage(input){
   }
 
 }
+function clearsInput(){
+  var inputTag = document.getElementById('word');
+  inputTag.value = '';
+}
 function insertError(errorString){
   //may need to come back and add id to input rather than querySelector
-  var inputNode = document.querySelector('input');
-  var p = document.createElement('p');
+
+  var p = document.getElementById('errorMessage');
   p.textContent= errorString;
-  inputNode.parentElement.insertBefore(p, inputNode);
+  
 }
   
 function initialize() {
