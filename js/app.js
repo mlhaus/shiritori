@@ -57,6 +57,7 @@ var listOfWords = getFakeWords();
 
 function changeScore(lengthOfWord) {
   // TODO ADD THE SECONDS REMAINING TO PARAMETER LIST
+  //    Game.scores=input.length-3;
   if(currentPlayer === player1) {
     p1Score += lengthOfWord - minNumbCharacters;
     p1ScoreElement.lastElementChild.textContent = p1Score;
@@ -83,14 +84,49 @@ form.addEventListener('submit',function(event){
     Game.wordsTyped.push(input);
     letter=input.charAt(input.length-1);
     changeScore(input.length);
-    Game.scores=input.length-3;
+    var errorString = '';
+    insertError(errorString);
     console.log('is not broke');
   }
   else{
+    console.log(input);
     console.log('something is broke');
+    
+    console.log(letter);
+    errorString = errorMesssage(input);
+    insertError(errorString);
+    
   }
   
 });
+function errorMesssage(input){
+  if(!input.startsWith(letter)){
+    clearsInput();
+    return 'Start with ' + letter;
+  }
+  if(Game.wordsTyped.includes(input)){
+    clearsInput();
+    return 'Word already used!';
+  }
+  if(!listOfWords.includes(input)){
+    return 'Not a word';
+  }
+  else{
+    return 'Error Message Broke';
+  }
+
+}
+function clearsInput(){
+  var inputTag = document.getElementById('word');
+  inputTag.value = '';
+}
+function insertError(errorString){
+  //may need to come back and add id to input rather than querySelector
+
+  var p = document.getElementById('errorMessage');
+  p.textContent= errorString;
+  
+}
   
 function playGame() {
   dict = new Dictionary('English');
@@ -101,8 +137,7 @@ function playGame() {
   minNumbCharacters = 3;
   p1Score = 0;
   p2Score = 0;
-  var letterNum = Math.floor(Math.random() * dict.alphabet.length);
-  letter = dict.alphabet[letterNum];
+  letter = dict.alphabet[Math.floor(Math.random() * dict.alphabet.length)];
   userWord.setAttribute('placeholder', letter);
   welcomeScreen.classList.add("hidden");
   pauseScreen.classList.add("hidden");
@@ -123,7 +158,6 @@ function initialize() {
   welcomeScreen.classList.remove("hidden");
   pauseScreen.classList.add("hidden");
   gameOverScreen.classList.add("hidden");
-  
 }
 
 playButton.addEventListener("click", playGame);
