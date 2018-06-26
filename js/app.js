@@ -1,6 +1,9 @@
 'use strict';
 
+var currentPlayer = 1;
+
 //Constructors for player, game, dictionary, settings
+
 function Player (name, profilePic) {
   this.name = name;
   this.highScore = 0;
@@ -29,3 +32,10 @@ function initialize() {
   var player1 = new Player(name);
   var player2 = new Player(name);
 }
+
+function switchPlayer();
+  if(currentPlayer == 1) {
+    currentPlayer = 2;
+  } else {
+    currentPlayer = 1;
+  }
