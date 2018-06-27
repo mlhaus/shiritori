@@ -227,6 +227,7 @@ function insertError(errorString){
 
 function playGame() {
   game = new Game(dict);
+  Game.wordsTyped = [];
   p1ScoreElement.lastElementChild.textContent = game.scores[0];
   p2ScoreElement.lastElementChild.textContent = game.scores[1];
   player1 = new Player(name);
