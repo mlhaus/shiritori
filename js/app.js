@@ -128,10 +128,12 @@ function switchPlayer() {
     currentPlayer = player2;
     p2ScoreElement.classList.add('current');
     p1ScoreElement.classList.remove('current');
+    clearsInput();
   } else {
     currentPlayer = player1;
     p2ScoreElement.classList.remove('current');
     p1ScoreElement.classList.add('current');
+    clearsInput();
   }
   countDown(15);
 }
