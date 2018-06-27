@@ -23,6 +23,8 @@ var pauseButton = document.getElementById('pauseButton');
 var p1ScoreElement = document.getElementById('player1Score');
 var p2ScoreElement = document.getElementById('player2Score');
 var winner = document.getElementById('winner');
+var p1WordsUsedElement = document.getElementById('player1words');
+var p2WordsUsedElement = document.getElementById('player2words');
 
 
 function getFakeWords() {
@@ -232,6 +234,8 @@ function playGame() {
   currentPlayer = player1;
   p2ScoreElement.classList.remove('current');
   p1ScoreElement.classList.add('current');
+  p1WordsUsedElement.textContent = '';
+  p2WordsUsedElement.textContent = '';
   minNumbCharacters = 3;
   minScoreToWin = 100;
   letter = dict.alphabet[Math.floor(Math.random() * dict.alphabet.length)];
