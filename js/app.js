@@ -12,6 +12,7 @@ var currentPlayer;
 var letter;
 var currentCountDown;
 var success=false;
+var timePoints;
 var userWord = document.getElementById('word');
 var welcomeScreen = document.getElementById('welcome');
 var pauseScreen = document.getElementById('pause');
@@ -88,6 +89,9 @@ function startTimer(duration, display) {
 
 function endTime() {
   gameOverScreen.classList.remove('hidden');
+  winnerStatment();
+}
+function winnerStatment(){
   if (game.scores[0] > game.scores[1]) {
     var winnerString = 'Player 1 Wins';
   }
@@ -125,6 +129,7 @@ function countDown(time){
       passMessage();
       switchPlayer();
     }
+    timePoints=time;
   },1000);
 }
 
@@ -144,15 +149,16 @@ function switchPlayer() {
 function changeScore(lengthOfWord) {
   // TODO ADD THE SECONDS REMAINING TO PARAMETER LIST
   if(currentPlayer === player1) {
-    game.scores[0] += lengthOfWord - minNumbCharacters;
+    game.scores[0] += lengthOfWord - minNumbCharacters + timePoints;
     p1ScoreElement.lastElementChild.textContent = game.scores[0];
   } else {
-    game.scores[1] += lengthOfWord - minNumbCharacters;
+    game.scores[1] += lengthOfWord - minNumbCharacters + timePoints;
     p2ScoreElement.lastElementChild.textContent = game.scores[1];
   }
   var gameOver = isGameOver();
   if (gameOver){
     gameOverScreen.classList.remove('hidden');
+    winnerStatment();
   }
 }
 
