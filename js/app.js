@@ -16,14 +16,12 @@ var userWord = document.getElementById('word');
 var welcomeScreen = document.getElementById('welcome');
 var pauseScreen = document.getElementById('pause');
 var gameOverScreen = document.getElementById('game_over');
-var playButton = document.getElementById('playButton');
 var continueButton = document.getElementById('continueButton');
-var restartButton = document.getElementById('restartButton');
-var newGameButton = document.getElementById('newGameButton');
+var playRestartNewButtons = document.querySelectorAll('.playButton');
 var highScoreButton = document.getElementById('highScoreButton');
 var pauseButton = document.getElementById('pauseButton');
-var p1ScoreElement =document.getElementById('player1Score');
-var p2ScoreElement =document.getElementById('player2Score');
+var p1ScoreElement = document.getElementById('player1Score');
+var p2ScoreElement = document.getElementById('player2Score');
 var winner = document.getElementById('winner');
 
 
@@ -59,8 +57,6 @@ function Dictionary (name) {
   this.name = name;
   this.alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 }
-var listOfWords = getFakeWords();
-
 
 function isGameOver (){
   return game.scores[0] >= minScoreToWin || game.scores[1] >= minScoreToWin;
@@ -153,14 +149,18 @@ function changeScore(lengthOfWord) {
   }
 }
 
-
+function listIncludes(input) {
+  var result = listOfWords.filter(item => item.word === input);
+  return [result.length > 0, result.index];
+}
 
 var form= document.querySelector('form');
 form.addEventListener('submit',function(event){
   event.preventDefault();
   var input=event.target.word.value;
-  if(listOfWords.includes(input)&&!Game.wordsTyped.includes(input)&&input.startsWith(letter)){
-    listOfWords.splice(listOfWords.indexOf(input),1);
+  var inputResult = listIncludes(input);
+  if(inputResult[0]&&!Game.wordsTyped.includes(input)&&input.startsWith(letter)){
+    listOfWords.splice(inputResult[1],1);
     Game.wordsTyped.push(input);
     letter=input.charAt(input.length-1);
     userWord.setAttribute('placeholder', letter);
@@ -224,7 +224,6 @@ function insertError(errorString){
 }
 
 function playGame() {
-  dict = new Dictionary('English');
   game = new Game(dict);
   p1ScoreElement.lastElementChild.textContent = game.scores[0];
   p2ScoreElement.lastElementChild.textContent = game.scores[1];
@@ -262,12 +261,15 @@ function initialize() {
   welcomeScreen.classList.remove('hidden');
   pauseScreen.classList.add('hidden');
   gameOverScreen.classList.add('hidden');
+  dict = new Dictionary('English');
+  loadData();
 }
 
-playButton.addEventListener('click', playGame);
+
+playRestartNewButtons[0].addEventListener('click', playGame);
 pauseButton.addEventListener('click', pauseGame);
 continueButton.addEventListener('click', continueGame);
 //TODO CLEAR LIST ON RESET
-restartButton.addEventListener('click', playGame);
+playRestartNewButtons[1].addEventListener('click', playGame);
 window.addEventListener('load', initialize);
-newGameButton.addEventListener('click', playGame);
+playRestartNewButtons[2].addEventListener('click', playGame);
