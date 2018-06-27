@@ -20,14 +20,14 @@ function loadWords(words) {
 
 // Load data on window load
 function loadData() {
-  var csvUrl = 'assets/dictionary-quotes.csv';
+  var csvUrl = 'assets/dictionary-2col-quotes.csv';
   Papa.parse(csvUrl, {
 
     // Download CSV data from csvUrl
     download: true,
 
     // Use CSV header row
-    header: false,
+    header: true,
 
     // When CSV data are available...
     complete: function(results) {

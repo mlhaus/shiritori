@@ -89,14 +89,18 @@ function changeScore(lengthOfWord) {
   }
 }
 
-
+function listIncludes(input) {
+  var result = listOfWords.filter(item => item.word === input);
+  return [result.length > 0, result.index];
+}
 
 var form= document.querySelector('form');
 form.addEventListener('submit',function(event){
   event.preventDefault();
   var input=event.target.word.value;
-  if(listOfWords.includes(input)&&!Game.wordsTyped.includes(input)&&input.startsWith(letter)){
-    listOfWords.splice(listOfWords.indexOf(input),1);
+  var inputResult = listIncludes(input);
+  if(inputResult[0]&&!Game.wordsTyped.includes(input)&&input.startsWith(letter)){
+    listOfWords.splice(inputResult[1],1);
     Game.wordsTyped.push(input);
     letter=input.charAt(input.length-1);
     userWord.setAttribute('placeholder', letter);
