@@ -1,5 +1,8 @@
 'use strict';
 var dict;
+var isPaused;
+var currentTime;
+var display;
 var minNumbCharacters;
 var minScoreToWin;
 var game;
@@ -65,7 +68,7 @@ function isGameOver (){
 
 function startTimer(duration, display) {
   var timer = duration, minutes, seconds;
-  
+  isPaused = false;
   var t = setInterval(function () {
     minutes = parseInt(timer / 60, 10)
     seconds = parseInt(timer % 60, 10);
@@ -74,7 +77,12 @@ function startTimer(duration, display) {
     seconds = seconds < 10 ? '0' + seconds : seconds;
 
     display.textContent = minutes + ':' + seconds;
-    if (--timer < 0) {
+
+    if (isPaused === true) {
+      clearInterval(t);
+      currentTime = timer;
+    }
+    else if (--timer < 0) {
       clearInterval(t);
       endTime();
     }
@@ -234,20 +242,20 @@ function playGame() {
   welcomeScreen.classList.add('hidden');
   pauseScreen.classList.add('hidden');
   gameOverScreen.classList.add('hidden');
-  var fiveMinutes = 60 / 4,
+  var fiveMinutes = 60 * 5,
   display = document.querySelector('#time');
   startTimer(fiveMinutes, display);
 }
 
 function pauseGame() {
-  // TODO Stop Timer Function
   pauseScreen.classList.remove('hidden');
-  
+  isPaused = true
 }
 
 function continueGame(){
-  // TODO Continue Timer Function
   pauseScreen.classList.add('hidden');
+  display = document.querySelector('#time');
+  startTimer(currentTime, display)
 }
 
 function initialize() {
@@ -259,6 +267,7 @@ function initialize() {
 playButton.addEventListener('click', playGame);
 pauseButton.addEventListener('click', pauseGame);
 continueButton.addEventListener('click', continueGame);
+//TODO CLEAR LIST ON RESET
 restartButton.addEventListener('click', playGame);
 window.addEventListener('load', initialize);
 newGameButton.addEventListener('click', playGame);
