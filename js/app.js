@@ -61,7 +61,7 @@ var listOfWords = getFakeWords();
 
 
 function isGameOver (){
-  return game.scores[0] >= minScoreToWin || game.scores[1] >= minScoreToWin; 
+  return game.scores[0] >= minScoreToWin || game.scores[1] >= minScoreToWin;
   //TODO  Determine if the timer is expired
 }
 
@@ -70,7 +70,7 @@ function startTimer(duration, display) {
   var timer = duration, minutes, seconds;
   isPaused = false;
   var t = setInterval(function () {
-    minutes = parseInt(timer / 60, 10)
+    minutes = parseInt(timer / 60, 10);
     seconds = parseInt(timer % 60, 10);
 
     minutes = minutes < 10 ? '0' + minutes : minutes;
@@ -87,19 +87,18 @@ function startTimer(duration, display) {
       endTime();
     }
   }, 1000);
-  
 }
 
 function endTime() {
   gameOverScreen.classList.remove('hidden');
   if (game.scores[0] > game.scores[1]) {
-    var winnerString = "Player 1 Wins"
-  } 
+    var winnerString = 'Player 1 Wins';
+  }
   else if (game.scores[0] < game.scores[1]) {
-    winnerString = "Player 2 Wins"
-  } 
+    winnerString = 'Player 2 Wins';
+  }
   else {
-    winnerString = "It's a Tie"
+    winnerString = 'It\'s a Tie';
   }
   winner.textContent = winnerString;
 }
@@ -120,12 +119,12 @@ function endTime() {
 //     }
 //     if(isPaused&&time===0){
 //       clearInterval(t);
-//       console.log("finished");
+//       console.log('finished');
 //     }
-//   },1000)
+//   },1000);
 // }
-
-// countdown();
+//
+//countdown();
 
 function switchPlayer() {
   if(currentPlayer === player1) {
@@ -242,20 +241,20 @@ function playGame() {
   welcomeScreen.classList.add('hidden');
   pauseScreen.classList.add('hidden');
   gameOverScreen.classList.add('hidden');
-  var fiveMinutes = 60 * 5,
+  var fiveMinutes = 60 * 5;
   display = document.querySelector('#time');
   startTimer(fiveMinutes, display);
 }
 
 function pauseGame() {
   pauseScreen.classList.remove('hidden');
-  isPaused = true
+  isPaused = true;
 }
 
 function continueGame(){
   pauseScreen.classList.add('hidden');
   display = document.querySelector('#time');
-  startTimer(currentTime, display)
+  startTimer(currentTime, display);
 }
 
 function initialize() {
