@@ -1,5 +1,6 @@
 'use strict';
 var dict;
+
 var minNumbCharacters;
 var minScoreToWin;
 var game;
@@ -53,8 +54,6 @@ function Dictionary (name) {
   this.name = name;
   this.alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 }
-var listOfWords = getFakeWords();
-
 
 function isGameOver (){
   return game.scores[0] >= minScoreToWin || game.scores[1] >= minScoreToWin;
@@ -160,7 +159,6 @@ function insertError(errorString){
 }
 
 function playGame() {
-  dict = new Dictionary('English');
   game = new Game(dict);
   p1ScoreElement.lastElementChild.textContent = game.scores[0];
   p2ScoreElement.lastElementChild.textContent = game.scores[1];
@@ -176,6 +174,7 @@ function playGame() {
   welcomeScreen.classList.add('hidden');
   pauseScreen.classList.add('hidden');
   gameOverScreen.classList.add('hidden');
+  console.log(listOfWords);
 }
 
 function pauseGame() {
@@ -192,6 +191,8 @@ function initialize() {
   welcomeScreen.classList.remove('hidden');
   pauseScreen.classList.add('hidden');
   gameOverScreen.classList.add('hidden');
+  dict = new Dictionary('English');
+  loadData();
 }
 
 playButton.addEventListener('click', playGame);
