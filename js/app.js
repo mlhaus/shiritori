@@ -86,9 +86,11 @@ function endTime() {
   gameOverScreen.classList.remove('hidden');
   if (game.scores[0] > game.scores[1]) {
     var winnerString = "Player 1 Wins"
-  } if (game.scores[0] < game.scores[1]) {
+  } 
+  else if (game.scores[0] < game.scores[1]) {
     winnerString = "Player 2 Wins"
-  } else {
+  } 
+  else {
     winnerString = "It's a Tie"
   }
   winner.textContent = winnerString;
