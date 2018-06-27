@@ -10,6 +10,8 @@ var player1;
 var player2;
 var currentPlayer;
 var letter;
+var currentCountDown;
+var success=false;
 var userWord = document.getElementById('word');
 var welcomeScreen = document.getElementById('welcome');
 var pauseScreen = document.getElementById('pause');
@@ -103,28 +105,25 @@ function endTime() {
   winner.textContent = winnerString;
 }
 
-// function countdown(){
-//   var isPaused=false;
-//   var time=15;
-//   var t=window.setInterval(function(){
-//     if(time===0){
-//       isPaused=true;
-//     }
-//     if(!isPaused){
-//       console.log(time);
-//       time--;
-//     }
-//     if(isPaused){
-//       clearInterval(t);
-//     }
-//     if(isPaused&&time===0){
-//       clearInterval(t);
-//       console.log('finished');
-//     }
-//   },1000);
-// }
-//
-//countdown();
+function countDown(time){
+  success=false;
+  isPaused=false;
+  var countDownInterval=window.setInterval(function(){
+    document.getElementById('countDown').textContent='00:'+time;
+    if(isPaused===true){
+      clearInterval(countDownInterval);
+      currentCountDown=time;
+    }
+    else if(success===true){
+      clearInterval(countDownInterval);
+      switchPlayer();
+    }
+    else if(--time<0){
+      clearInterval(countDownInterval);
+      switchPlayer();
+    }
+  },1000);
+}
 
 function switchPlayer() {
   if(currentPlayer === player1) {
@@ -136,6 +135,7 @@ function switchPlayer() {
     p2ScoreElement.classList.remove('current');
     p1ScoreElement.classList.add('current');
   }
+  countDown(15);
 }
 
 function changeScore(lengthOfWord) {
@@ -150,8 +150,6 @@ function changeScore(lengthOfWord) {
   var gameOver = isGameOver();
   if (gameOver){
     gameOverScreen.classList.remove('hidden');
-  } else {
-    switchPlayer();
   }
 }
 
@@ -171,6 +169,7 @@ form.addEventListener('submit',function(event){
     var errorString = '';
     insertError(errorString);
     clearsInput();
+    success=true;
     console.log('is not broke');
   }
   else{
@@ -244,6 +243,7 @@ function playGame() {
   var fiveMinutes = 60 * 5;
   display = document.querySelector('#time');
   startTimer(fiveMinutes, display);
+  countDown(15);
 }
 
 function pauseGame() {
@@ -255,6 +255,7 @@ function continueGame(){
   pauseScreen.classList.add('hidden');
   display = document.querySelector('#time');
   startTimer(currentTime, display);
+  countDown(currentCountDown);
 }
 
 function initialize() {
