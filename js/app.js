@@ -60,7 +60,6 @@ function Dictionary (name) {
 
 function isGameOver (){
   return game.scores[0] >= minScoreToWin || game.scores[1] >= minScoreToWin;
-  //TODO  Determine if the timer is expired
 }
 
 
@@ -101,6 +100,13 @@ function endTime() {
   winner.textContent = winnerString;
 }
 
+function passMessage() {
+  var inputWordString = 'PASS';
+  listMaker5000(inputWordString);
+}
+
+console.log(passMessage)
+
 function countDown(time){
   success=false;
   isPaused=false;
@@ -116,6 +122,7 @@ function countDown(time){
     }
     else if(--time<0){
       clearInterval(countDownInterval);
+      passMessage();
       switchPlayer();
     }
   },1000);
@@ -171,6 +178,7 @@ form.addEventListener('submit',function(event){
     clearsInput();
     success=true;
     console.log('is not broke');
+  
   }
   else{
     console.log(input);
@@ -244,6 +252,7 @@ function playGame() {
   startTimer(fiveMinutes, display);
   countDown(15);
 }
+
 
 function pauseGame() {
   pauseScreen.classList.remove('hidden');
