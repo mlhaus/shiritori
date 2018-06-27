@@ -1,5 +1,8 @@
 'use strict';
 var dict;
+var isPaused;
+var currentTime;
+var display;
 var minNumbCharacters;
 var minScoreToWin;
 var game;
@@ -19,6 +22,7 @@ var highScoreButton = document.getElementById('highScoreButton');
 var pauseButton = document.getElementById('pauseButton');
 var p1ScoreElement =document.getElementById('player1Score');
 var p2ScoreElement =document.getElementById('player2Score');
+var winner = document.getElementById('winner');
 
 
 function getFakeWords() {
@@ -57,9 +61,71 @@ var listOfWords = getFakeWords();
 
 
 function isGameOver (){
-  return game.scores[0] >= minScoreToWin || game.scores[1] >= minScoreToWin;
+  return game.scores[0] >= minScoreToWin || game.scores[1] >= minScoreToWin; 
   //TODO  Determine if the timer is expired
 }
+
+
+function startTimer(duration, display) {
+  var timer = duration, minutes, seconds;
+  isPaused = false;
+  var t = setInterval(function () {
+    minutes = parseInt(timer / 60, 10)
+    seconds = parseInt(timer % 60, 10);
+
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+    display.textContent = minutes + ':' + seconds;
+
+    if (isPaused === true) {
+      clearInterval(t);
+      currentTime = timer;
+    }
+    else if (--timer < 0) {
+      clearInterval(t);
+      endTime();
+    }
+  }, 1000);
+  
+}
+
+function endTime() {
+  gameOverScreen.classList.remove('hidden');
+  if (game.scores[0] > game.scores[1]) {
+    var winnerString = "Player 1 Wins"
+  } 
+  else if (game.scores[0] < game.scores[1]) {
+    winnerString = "Player 2 Wins"
+  } 
+  else {
+    winnerString = "It's a Tie"
+  }
+  winner.textContent = winnerString;
+}
+
+// function countdown(){
+//   var isPaused=false;
+//   var time=15;
+//   var t=window.setInterval(function(){
+//     if(time===0){
+//       isPaused=true;
+//     }
+//     if(!isPaused){
+//       console.log(time);
+//       time--;
+//     }
+//     if(isPaused){
+//       clearInterval(t);
+//     }
+//     if(isPaused&&time===0){
+//       clearInterval(t);
+//       console.log("finished");
+//     }
+//   },1000)
+// }
+
+// countdown();
 
 function switchPlayer() {
   if(currentPlayer === player1) {
@@ -176,16 +242,20 @@ function playGame() {
   welcomeScreen.classList.add('hidden');
   pauseScreen.classList.add('hidden');
   gameOverScreen.classList.add('hidden');
+  var fiveMinutes = 60 * 5,
+  display = document.querySelector('#time');
+  startTimer(fiveMinutes, display);
 }
 
 function pauseGame() {
-  // TODO Stop Timer Function
   pauseScreen.classList.remove('hidden');
+  isPaused = true
 }
 
 function continueGame(){
-  // TODO Continue Timer Function
   pauseScreen.classList.add('hidden');
+  display = document.querySelector('#time');
+  startTimer(currentTime, display)
 }
 
 function initialize() {
@@ -197,6 +267,7 @@ function initialize() {
 playButton.addEventListener('click', playGame);
 pauseButton.addEventListener('click', pauseGame);
 continueButton.addEventListener('click', continueGame);
+//TODO CLEAR LIST ON RESET
 restartButton.addEventListener('click', playGame);
 window.addEventListener('load', initialize);
 newGameButton.addEventListener('click', playGame);
