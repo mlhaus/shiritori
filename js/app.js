@@ -19,6 +19,7 @@ var highScoreButton = document.getElementById('highScoreButton');
 var pauseButton = document.getElementById('pauseButton');
 var p1ScoreElement =document.getElementById('player1Score');
 var p2ScoreElement =document.getElementById('player2Score');
+var winner = document.getElementById('winner');
 
 
 function getFakeWords() {
@@ -57,14 +58,15 @@ var listOfWords = getFakeWords();
 
 
 function isGameOver (){
-  return game.scores[0] >= minScoreToWin || game.scores[1] >= minScoreToWin;
+  return game.scores[0] >= minScoreToWin || game.scores[1] >= minScoreToWin; 
   //TODO  Determine if the timer is expired
 }
 
 
 function startTimer(duration, display) {
   var timer = duration, minutes, seconds;
-  setInterval(function () {
+  
+  var t = setInterval(function () {
     minutes = parseInt(timer / 60, 10)
     seconds = parseInt(timer % 60, 10);
 
@@ -72,21 +74,48 @@ function startTimer(duration, display) {
     seconds = seconds < 10 ? '0' + seconds : seconds;
 
     display.textContent = minutes + ':' + seconds;
-
     if (--timer < 0) {
-      timer = duration;
+      clearInterval(t);
+      endTime();
     }
   }, 1000);
-  var paused = false
   
 }
 
-window.onload = function () {
-  var fiveMinutes = 60 * 5,
-      display = document.querySelector('#time');
-  startTimer(fiveMinutes, display);
-};
+function endTime() {
+  gameOverScreen.classList.remove('hidden');
+  if (game.scores[0] > game.scores[1]) {
+    var winnerString = "Player 1 Wins"
+  } if (game.scores[0] < game.scores[1]) {
+    winnerString = "Player 2 Wins"
+  } else {
+    winnerString = "It's a Tie"
+  }
+  winner.textContent = winnerString;
+}
 
+// function countdown(){
+//   var isPaused=false;
+//   var time=15;
+//   var t=window.setInterval(function(){
+//     if(time===0){
+//       isPaused=true;
+//     }
+//     if(!isPaused){
+//       console.log(time);
+//       time--;
+//     }
+//     if(isPaused){
+//       clearInterval(t);
+//     }
+//     if(isPaused&&time===0){
+//       clearInterval(t);
+//       console.log("finished");
+//     }
+//   },1000)
+// }
+
+// countdown();
 
 function switchPlayer() {
   if(currentPlayer === player1) {
@@ -203,11 +232,15 @@ function playGame() {
   welcomeScreen.classList.add('hidden');
   pauseScreen.classList.add('hidden');
   gameOverScreen.classList.add('hidden');
+  var fiveMinutes = 60 / 4,
+  display = document.querySelector('#time');
+  startTimer(fiveMinutes, display);
 }
 
 function pauseGame() {
   // TODO Stop Timer Function
   pauseScreen.classList.remove('hidden');
+  
 }
 
 function continueGame(){
