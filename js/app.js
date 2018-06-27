@@ -24,6 +24,8 @@ var pauseButton = document.getElementById('pauseButton');
 var p1ScoreElement = document.getElementById('player1Score');
 var p2ScoreElement = document.getElementById('player2Score');
 var winner = document.getElementById('winner');
+var p1WordsUsedElement = document.getElementById('player1words');
+var p2WordsUsedElement = document.getElementById('player2words');
 
 
 function getFakeWords() {
@@ -138,10 +140,12 @@ function switchPlayer() {
     currentPlayer = player2;
     p2ScoreElement.classList.add('current');
     p1ScoreElement.classList.remove('current');
+    clearsInput();
   } else {
     currentPlayer = player1;
     p2ScoreElement.classList.remove('current');
     p1ScoreElement.classList.add('current');
+    clearsInput();
   }
   countDown(15);
 }
@@ -239,6 +243,7 @@ function insertError(errorString){
 
 function playGame() {
   game = new Game(dict);
+  Game.wordsTyped = [];
   p1ScoreElement.lastElementChild.textContent = game.scores[0];
   p2ScoreElement.lastElementChild.textContent = game.scores[1];
   player1 = new Player(name);
@@ -246,6 +251,8 @@ function playGame() {
   currentPlayer = player1;
   p2ScoreElement.classList.remove('current');
   p1ScoreElement.classList.add('current');
+  p1WordsUsedElement.textContent = '';
+  p2WordsUsedElement.textContent = '';
   minNumbCharacters = 3;
   minScoreToWin = 100;
   letter = dict.alphabet[Math.floor(Math.random() * dict.alphabet.length)];
