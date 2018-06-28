@@ -33,6 +33,9 @@ var p2ScoreElement = document.getElementById('player2Score');
 var winner = document.getElementById('winner');
 var p1WordsUsedElement = document.getElementById('player1words');
 var p2WordsUsedElement = document.getElementById('player2words');
+var player1Name= document.getElementById('player1Name');
+var player2Name= document.getElementById('player2Name');
+
 
 
 function getFakeWords() {
@@ -184,6 +187,26 @@ function listIncludes(input) {
   return result.length > 0;
 }
 
+player1Name.addEventListener('focusin', function(){
+  player1Name.value='';
+
+});
+player1Name.addEventListener('focusout', function(){
+  if(player1Name.value === '')
+    player1Name.value = 'Player 1';
+});
+
+player2Name.addEventListener('focusin', function(){
+  player2Name.value='';
+
+});
+player2Name.addEventListener('focusout', function(){
+  if(player2Name.value === '')
+    player2Name.value = 'Player 2';
+});
+
+
+
 var form= document.querySelector('form');
 form.addEventListener('submit',function(event){
   event.preventDefault();
@@ -253,8 +276,11 @@ function playGame() {
   Game.wordsTyped = [];
   p1ScoreElement.lastElementChild.textContent = game.scores[0];
   p2ScoreElement.lastElementChild.textContent = game.scores[1];
-  player1 = new Player("Player 1");
-  player2 = new Player("Player 2");
+  console.log(document.getElementById('player1Name'));
+  player1 = new Player(player1Name.value);
+  player2 = new Player(player2Name.value);
+  p1ScoreElement.firstElementChild.textContent= player1.name;
+  p2ScoreElement.firstElementChild.textContent= player2.name;
   currentPlayer = player1;
   p2ScoreElement.classList.remove('current');
   p1ScoreElement.classList.add('current');
