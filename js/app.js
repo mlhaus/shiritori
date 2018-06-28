@@ -63,7 +63,7 @@ function Player (name, profilePic) {
   this.name = name;
   this.highScore = 0;
   this.profilePic = profilePic || 'img/no-image.jpg';
-
+  this.longest = "";
   Game.players.push (this);
 }
 
@@ -186,9 +186,12 @@ function changeScore(lengthOfWord) {
   }
 }
 
+var d = new Date();
+var string = d.toLocaleDateString();
+
 function highScore() {
   if (game.scores[0] > minScoreToWin) {
-    var tableRow = [player1Name.value, new Date().getDate, gameTimer, player1.longest];
+    var tableRow = [player1Name.value, string, gameTimer, player1.longest];
     console.log(tableRow);
     // localStorage["highScore"]
   }
@@ -228,6 +231,10 @@ form.addEventListener('submit',function(event){
     Game.wordsTyped.push(input);
     letter=input.charAt(input.length-1);
     userWord.setAttribute('placeholder', letter);
+    if (currentPlayer.longest.length < input.length) {
+      currentPlayer.longest = input;
+      console.log(currentPlayer.longest.length)
+    }
     listMaker5000(input);
     changeScore(input.length);
     var errorString = '';
