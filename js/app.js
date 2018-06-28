@@ -109,10 +109,10 @@ function endTime() {
 }
 function winnerStatment(){
   if (game.scores[0] > game.scores[1]) {
-    var winnerString = 'Player 1 Wins';
+    var winnerString = player1Name.value + ' Wins';
   }
   else if (game.scores[0] < game.scores[1]) {
-    winnerString = 'Player 2 Wins';
+    winnerString = player2Name.value + ' Wins';
   }
   else {
     winnerString = 'It\'s a Tie';
