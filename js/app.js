@@ -18,6 +18,8 @@ var currentPlayer;
 var letter;
 var timePoints;
 var success;
+var toggled=false;
+var settingsButton=document.getElementById('settingsToggle');
 var userWord = document.getElementById('word');
 var welcomeScreen = document.getElementById('welcome');
 var pauseScreen = document.getElementById('pause');
@@ -33,6 +35,7 @@ var p1WordsUsedElement = document.getElementById('player1words');
 var p2WordsUsedElement = document.getElementById('player2words');
 var player1Name= document.getElementById('player1Name');
 var player2Name= document.getElementById('player2Name');
+var instructionsButton = document.getElementById('instructionsButton');
 
 
 
@@ -124,10 +127,10 @@ function endTime() {
 
 function winnerStatment(){
   if (game.scores[0] > game.scores[1]) {
-    var winnerString = 'Player 1 Wins';
+    var winnerString = player1Name.value + ' Wins';
   }
   else if (game.scores[0] < game.scores[1]) {
-    winnerString = 'Player 2 Wins';
+    winnerString = player2Name.value + ' Wins';
   }
   else {
     winnerString = 'It\'s a Tie';
@@ -277,8 +280,9 @@ function playGame() {
   p1ScoreElement.classList.add('current');
   p1WordsUsedElement.textContent = '';
   p2WordsUsedElement.textContent = '';
-  minNumbCharacters = 3;
-  minScoreToWin = 100;
+  minNumbCharacters = document.getElementById('minCharRequired').value;
+  document.getElementById('word').minLength=minNumbCharacters;
+  minScoreToWin = document.getElementById('scoreToWin').value;
   letter = dict.alphabet[Math.floor(Math.random() * dict.alphabet.length)];
   success = false;
   isPaused = false;
@@ -287,7 +291,7 @@ function playGame() {
   pauseScreen.classList.add('hidden');
   gameOverScreen.classList.add('hidden');
   gameTimer = 300;
-  roundTimer = 15;
+  roundTimer = document.getElementById('secPerTurn').value;
   minutes = parseInt(gameTimer / 60);
   seconds = parseInt(gameTimer % 60);
   minutes = minutes < 10 ? '0' + minutes : minutes;
@@ -297,6 +301,24 @@ function playGame() {
   timer(gameTimer, roundTimer);
 }
 
+function toggleSettings(){
+  if(toggled===false){
+    document.getElementsByClassName('settings')[0].classList.remove('hidden');
+    document.getElementsByClassName('settings')[1].classList.remove('hidden');
+    document.getElementsByClassName('settings')[2].classList.remove('hidden');
+    document.getElementsByClassName('settings')[3].classList.remove('hidden');
+    document.getElementsByClassName('settings')[4].classList.remove('hidden');
+    toggled=true;
+  }
+  else{
+    document.getElementsByClassName('settings')[0].classList.add('hidden');
+    document.getElementsByClassName('settings')[1].classList.add('hidden');
+    document.getElementsByClassName('settings')[2].classList.add('hidden');
+    document.getElementsByClassName('settings')[3].classList.add('hidden');
+    document.getElementsByClassName('settings')[4].classList.add('hidden');
+    toggled=false;
+  }
+}
 
 function pauseGame() {
   pauseScreen.classList.remove('hidden');
@@ -309,6 +331,10 @@ function continueGame(){
   pauseScreen.classList.add('hidden');
 }
 
+function loadInstructions(){
+  location.href='instructions.html';
+}
+
 function initialize() {
   welcomeScreen.classList.remove('hidden');
   pauseScreen.classList.add('hidden');
@@ -317,11 +343,13 @@ function initialize() {
   loadData();
 }
 
-
 playRestartNewButtons[0].addEventListener('click', playGame);
 pauseButton.addEventListener('click', pauseGame);
 continueButton.addEventListener('click', continueGame);
-//TODO CLEAR LIST ON RESET
+settingsButton.addEventListener('input',toggleSettings);
 playRestartNewButtons[1].addEventListener('click', playGame);
 window.addEventListener('load', initialize);
+
 playRestartNewButtons[2].addEventListener('click', playGame);
+instructionsButton.addEventListener('click', loadInstructions);
+
