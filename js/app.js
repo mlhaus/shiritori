@@ -2,7 +2,8 @@
 var dict;
 var isPaused;
 var currentTime;
-var timer;
+var gameTimer;
+var roundTimer;
 var minutes;
 var seconds;
 var gameTimerElement = document.querySelector('#time');
@@ -16,6 +17,8 @@ var currentPlayer;
 var letter;
 var currentCountDown;
 var success;
+var t1;
+var t2;
 var userWord = document.getElementById('word');
 var welcomeScreen = document.getElementById('welcome');
 var pauseScreen = document.getElementById('pause');
@@ -69,26 +72,28 @@ function isGameOver (){
 
 
 function startTimer(duration) {
-  timer = duration;
-  isPaused = false;
-  var t = setInterval(function () {
-    if (timer <= 0) {
-      clearInterval(t);
+  gameTimer = duration;
+  t1 = setInterval(function () {
+    if (gameTimer <= 0) {
+      clearInterval(t1);
+      clearInterval(t2);
       endTime();
     }
-    if (isPaused === true) {
-      clearInterval(t);
-      currentTime = timer;
-    }
     else {
-      --timer;
-      minutes = parseInt(timer / 60);
-      seconds = parseInt(timer % 60);
+      if (isPaused === true) {
+        clearInterval(t1);
+        currentTime = gameTimer;
+      }
+      else {
+        --gameTimer;
+        minutes = parseInt(gameTimer / 60);
+        seconds = parseInt(gameTimer % 60);
 
-      minutes = minutes < 10 ? '0' + minutes : minutes;
-      seconds = seconds < 10 ? '0' + seconds : seconds;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
 
-      gameTimerElement.textContent = minutes + ':' + seconds;
+        gameTimerElement.textContent = minutes + ':' + seconds;
+      }
     }
   }, 1000);
 }
@@ -107,22 +112,21 @@ function endTime() {
   winner.textContent = winnerString;
 }
 
-function countDown(time){
-  success=false;
-  isPaused=false;
-  var countDownInterval=window.setInterval(function(){
-    if(time <= 0 || success===true){
-      clearInterval(countDownInterval);
+function countDown(duration){
+  roundTimer = duration;
+  t2 = setInterval(function(){
+    if(roundTimer <= 0 || success===true){
+      clearInterval(t2);
       switchPlayer();
     }
     else {
       if(isPaused===true){
-        clearInterval(countDownInterval);
-        currentCountDown=time;
+        clearInterval(t2);
+        currentCountDown=roundTimer;
       }
       else {
-        --time;
-        countDownElement.textContent='00:'+time;
+        --roundTimer;
+        countDownElement.textContent='00:'+roundTimer;
       }
     }
   },1000);
@@ -236,28 +240,30 @@ function playGame() {
   game = new Game(dict);
   p1ScoreElement.lastElementChild.textContent = game.scores[0];
   p2ScoreElement.lastElementChild.textContent = game.scores[1];
-  player1 = new Player(name);
-  player2 = new Player(name);
+  player1 = new Player("Player 1");
+  player2 = new Player("Player 2");
   currentPlayer = player1;
   p2ScoreElement.classList.remove('current');
   p1ScoreElement.classList.add('current');
   minNumbCharacters = 3;
   minScoreToWin = 100;
-  currentCountDown = 15;
   letter = dict.alphabet[Math.floor(Math.random() * dict.alphabet.length)];
+  success = false;
+  isPaused = false;
   userWord.setAttribute('placeholder', letter);
   welcomeScreen.classList.add('hidden');
   pauseScreen.classList.add('hidden');
   gameOverScreen.classList.add('hidden');
-  timer = 300;
-  minutes = parseInt(timer / 60);
-  seconds = parseInt(timer % 60);
+  gameTimer = 300;
+  roundTimer = 15;
+  minutes = parseInt(gameTimer / 60);
+  seconds = parseInt(gameTimer % 60);
   minutes = minutes < 10 ? '0' + minutes : minutes;
   seconds = seconds < 10 ? '0' + seconds : seconds;
   gameTimerElement.textContent = minutes + ':' + seconds;
-  countDownElement.textContent='00:'+currentCountDown;
-  startTimer(timer);
-  countDown(currentCountDown);
+  countDownElement.textContent='00:'+roundTimer;
+  startTimer(gameTimer);
+  countDown(roundTimer);
 }
 
 function pauseGame() {
