@@ -35,6 +35,7 @@ var p1WordsUsedElement = document.getElementById('player1words');
 var p2WordsUsedElement = document.getElementById('player2words');
 var player1Name= document.getElementById('player1Name');
 var player2Name= document.getElementById('player2Name');
+var instructionsButton = document.getElementById('instructionsButton');
 
 
 
@@ -320,6 +321,10 @@ function continueGame(){
   pauseScreen.classList.add('hidden');
 }
 
+function loadInstructions(){
+  location.href='instructions.html';
+}
+
 function initialize() {
   welcomeScreen.classList.remove('hidden');
   pauseScreen.classList.add('hidden');
@@ -336,3 +341,4 @@ continueButton.addEventListener('click', continueGame);
 playRestartNewButtons[1].addEventListener('click', playGame);
 window.addEventListener('load', initialize);
 playRestartNewButtons[2].addEventListener('click', playGame);
+instructionsButton.addEventListener('click', loadInstructions);
