@@ -20,6 +20,8 @@ var timePoints;
 var success;
 var t1;
 var t2;
+var toggled=false;
+var settingsButton=document.getElementById('settingsToggle');
 var userWord = document.getElementById('word');
 var welcomeScreen = document.getElementById('welcome');
 var pauseScreen = document.getElementById('pause');
@@ -275,7 +277,6 @@ function playGame() {
   Game.wordsTyped = [];
   p1ScoreElement.lastElementChild.textContent = game.scores[0];
   p2ScoreElement.lastElementChild.textContent = game.scores[1];
-  console.log(document.getElementById('player1Name'));
   player1 = new Player(player1Name.value);
   player2 = new Player(player2Name.value);
   p1ScoreElement.firstElementChild.textContent= player1.name;
@@ -285,8 +286,9 @@ function playGame() {
   p1ScoreElement.classList.add('current');
   p1WordsUsedElement.textContent = '';
   p2WordsUsedElement.textContent = '';
-  minNumbCharacters = 3;
-  minScoreToWin = 100;
+  minNumbCharacters = document.getElementById('minCharRequired').value;
+  document.getElementById('word').minLength=minNumbCharacters;
+  minScoreToWin = document.getElementById('scoreToWin').value;
   letter = dict.alphabet[Math.floor(Math.random() * dict.alphabet.length)];
   success = false;
   isPaused = false;
@@ -295,7 +297,7 @@ function playGame() {
   pauseScreen.classList.add('hidden');
   gameOverScreen.classList.add('hidden');
   gameTimer = 300;
-  roundTimer = 15;
+  roundTimer = document.getElementById('secPerTurn').value;
   clearInterval(t1);
   clearInterval(t2);
   minutes = parseInt(gameTimer / 60);
@@ -308,6 +310,24 @@ function playGame() {
   countDown(roundTimer);
 }
 
+function toggleSettings(){
+  if(toggled===false){
+    document.getElementsByClassName('settings')[0].classList.remove('hidden');
+    document.getElementsByClassName('settings')[1].classList.remove('hidden');
+    document.getElementsByClassName('settings')[2].classList.remove('hidden');
+    document.getElementsByClassName('settings')[3].classList.remove('hidden');
+    document.getElementsByClassName('settings')[4].classList.remove('hidden');
+    toggled=true;
+  }
+  else{
+    document.getElementsByClassName('settings')[0].classList.add('hidden');
+    document.getElementsByClassName('settings')[1].classList.add('hidden');
+    document.getElementsByClassName('settings')[2].classList.add('hidden');
+    document.getElementsByClassName('settings')[3].classList.add('hidden');
+    document.getElementsByClassName('settings')[4].classList.add('hidden');
+    toggled=false;
+  }
+}
 
 function pauseGame() {
   pauseScreen.classList.remove('hidden');
@@ -333,12 +353,13 @@ function initialize() {
   loadData();
 }
 
-
 playRestartNewButtons[0].addEventListener('click', playGame);
 pauseButton.addEventListener('click', pauseGame);
 continueButton.addEventListener('click', continueGame);
-//TODO CLEAR LIST ON RESET
+settingsButton.addEventListener('input',toggleSettings);
 playRestartNewButtons[1].addEventListener('click', playGame);
 window.addEventListener('load', initialize);
+
 playRestartNewButtons[2].addEventListener('click', playGame);
 instructionsButton.addEventListener('click', loadInstructions);
+
