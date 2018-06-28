@@ -35,11 +35,12 @@
           <h2>Instructions</h2>
           <ul>
             <li>Shiritori is a word game where you compete against another player attempting to use your entire vocabulary to enter words as fast as possible. The longer the word the more points.</li>
-            <li>Each word you use has to use the same first letter as the last letter of the most previous entered word. The game starts with a placeholder for the first letter. There is a 15 second timer for each turn.</li>
+            <li>Each word you use has to use the same <i>first</i> letter as the <i>last</i> letter of the most previous entered word. The game starts with a placeholder for the first letter. There is a 15 second timer for each turn.</li>
             <li>So, if the letter ‘a’ is in the input field, the first player could type ‘apple’. The next player would then have to use a word that starts with the letter ‘e’.</li>
             <li>If the 15 second timer hits 0 before a player enters a word, they lose their turn and it passes to their opponent.</li>
-            <li>Scoring is based on word length + the amount of time left on that turn. The word has to be 3 letters long so every letter after that gives 1 point. If 5 seconds are left on that turn, 5 points are added to the score.  (e.g. typing the word hippopotamus and having 3 seconds left on the timer would award 12 points.</li>
+            <li>Scoring is based on word length + the amount of time left on that turn. The word has to be 3 letters long so every letter after the second letter gives 1 point. If 5 seconds are left on that turn, 5 points are added to the score.  (e.g. typing the word hi<strong>ppopotamus</strong> and having 3 seconds left on the timer would award 13 points.</li>
             <li>Instances of inputs that won’t work; a word that doesn’t exist (e.g. jtrulf), a word that has already been used (if player 1 uses the word ‘tiger’, neither player can use that word again in that game), and a word that doesn’t start with the right letter (e.g. if player 1 uses the word ‘search’ and player 2 then tries to enter the word ‘cruise’, it won’t be accepted). 2 letter words aren’t accepted either.</li>
+            <li>Proper nouns and two letter words are also not used.</li>
             <li>The game has an overall timer of 5 minutes. The game will end whenever one of the players reaches 100 points or if that 5 minute timer hits 0. Whichever player has the most points after the time runs out will be declared the winner. The game will end in a tie if they have the same amount of points after the time hits 0.</li>
           </ul>
         </section>
