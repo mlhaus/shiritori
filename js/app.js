@@ -50,7 +50,6 @@ function getFakeWords() {
   return arr;
 }
 
-
 //Constructors for player, game, dictionary, settings
 function Game (dictionary) {
   this.scores = [0, 0];
@@ -64,7 +63,7 @@ function Player (name, profilePic) {
   this.name = name;
   this.highScore = 0;
   this.profilePic = profilePic || 'img/no-image.jpg';
-
+  this.longest = "";
   Game.players.push (this);
 }
 
@@ -76,6 +75,7 @@ function Dictionary (name) {
 function isGameOver (){
   return game.scores[0] >= minScoreToWin || game.scores[1] >= minScoreToWin;
 }
+
 
 
 function timer(gameTime, roundTime) {
@@ -121,6 +121,7 @@ function timer(gameTime, roundTime) {
 function endTime() {
   gameOverScreen.classList.remove('hidden');
   winnerStatment();
+
 }
 
 function winnerStatment(){
@@ -173,7 +174,24 @@ function changeScore(lengthOfWord) {
   if (gameOver){
     gameOverScreen.classList.remove('hidden');
     winnerStatment();
+    highScore();
   }
+}
+
+function highScore() {
+  var d = new Date();
+  var dateString = d.toLocaleDateString();
+  var hsTable = JSON.parse(localStorage["highScore"]) || [];
+  if (game.scores[0] > minScoreToWin) {
+    var tableRow = [player1Name.value, dateString, gameTimer, player1.longest];   
+    hsTable.push(tableRow);
+    localStorage["highScore"] = JSON.stringify(hsTable);
+  }
+  if (game.scores[1] > minScoreToWin) {
+    tableRow = [player2Name.value, dateString, gameTimer, player2.longest];
+    localStorage["highScore"] = JSON.stringify(tableRow);
+  }
+
 }
 
 function listIncludes(input) {
@@ -210,6 +228,10 @@ form.addEventListener('submit',function(event){
     Game.wordsTyped.push(input);
     letter=input.charAt(input.length-1);
     userWord.setAttribute('placeholder', letter);
+    if (currentPlayer.longest.length < input.length) {
+      currentPlayer.longest = input;
+      console.log(currentPlayer.longest.length)
+    }
     listMaker5000(input);
     changeScore(input.length);
     var errorString = '';
@@ -316,6 +338,7 @@ function toggleSettings(){
     toggled=false;
   }
 }
+
 
 function pauseGame() {
   pauseScreen.classList.remove('hidden');
