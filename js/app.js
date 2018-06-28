@@ -72,22 +72,23 @@ function startTimer(duration) {
   timer = duration;
   isPaused = false;
   var t = setInterval(function () {
-    if (--timer < 0) {
+    if (timer <= 0) {
       clearInterval(t);
       endTime();
     }
-    minutes = parseInt(timer / 60);
-    seconds = parseInt(timer % 60);
-
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-    seconds = seconds < 10 ? '0' + seconds : seconds;
-
-    gameTimerElement.textContent = minutes + ':' + seconds;
-
     if (isPaused === true) {
-      currentTime = timer;
-      console.log(currentTime + " " + timer);
       clearInterval(t);
+      currentTime = timer;
+    }
+    else {
+      --timer;
+      minutes = parseInt(timer / 60);
+      seconds = parseInt(timer % 60);
+
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      seconds = seconds < 10 ? '0' + seconds : seconds;
+
+      gameTimerElement.textContent = minutes + ':' + seconds;
     }
   }, 1000);
 }
@@ -110,18 +111,19 @@ function countDown(time){
   success=false;
   isPaused=false;
   var countDownInterval=window.setInterval(function(){
-    if(--time<0){
+    if(time <= 0 || success===true){
       clearInterval(countDownInterval);
       switchPlayer();
     }
-    countDownElement.textContent='00:'+time;
-    if(isPaused===true){
-      currentCountDown=time;
-      clearInterval(countDownInterval);
-    }
-    else if(success===true){
-      clearInterval(countDownInterval);
-      switchPlayer();
+    else {
+      if(isPaused===true){
+        clearInterval(countDownInterval);
+        currentCountDown=time;
+      }
+      else {
+        --time;
+        countDownElement.textContent='00:'+time;
+      }
     }
   },1000);
 }
@@ -136,7 +138,9 @@ function switchPlayer() {
     p2ScoreElement.classList.remove('current');
     p1ScoreElement.classList.add('current');
   }
-  countDown(15);
+  currentCountDown = 15;
+  countDownElement.textContent='00:'+currentCountDown;
+  countDown(currentCountDown);
 }
 
 function changeScore(lengthOfWord) {
@@ -257,19 +261,8 @@ function playGame() {
 }
 
 function pauseGame() {
-  console.log(currentTime + " " + currentCountDown);
   pauseScreen.classList.remove('hidden');
   isPaused = true;
-  var minutes, seconds;
-  minutes = parseInt(++currentTime / 60);
-  seconds = parseInt(currentTime % 60);
-
-  minutes = minutes < 10 ? '0' + minutes : minutes;
-  seconds = seconds < 10 ? '0' + seconds : seconds;
-
-  gameTimerElement.textContent = minutes + ':' + seconds;
-  
-  countDownElement.textContent='00:'+(++currentCountDown);
 }
 
 function continueGame(){
