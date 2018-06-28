@@ -271,6 +271,8 @@ function playGame() {
   gameOverScreen.classList.add('hidden');
   gameTimer = 300;
   roundTimer = 15;
+  clearInterval(t1);
+  clearInterval(t2);
   minutes = parseInt(gameTimer / 60);
   seconds = parseInt(gameTimer % 60);
   minutes = minutes < 10 ? '0' + minutes : minutes;
