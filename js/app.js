@@ -16,7 +16,7 @@ var player2;
 var currentPlayer;
 var letter;
 var currentCountDown;
-
+var timePoints;
 var success;
 var t1;
 var t2;
@@ -116,17 +116,17 @@ function winnerStatment(){
   }
   winner.textContent = winnerString;
 }
-function passMessage() {
-  var inputWordString = 'PASS';
-  listMaker5000(inputWordString);
-}
 
 function countDown(duration){
   roundTimer = duration;
   t2 = setInterval(function(){
-    if(roundTimer <= 0 || success===true){
-      timePoints=roundTimer;
-      switchPlayer();
+    if(roundTimer <= 0 || success===true || isGameOver()){
+      if(roundTimer<=0){
+        listMaker5000('PASS');
+      }
+      if(!isGameOver()){
+        switchPlayer();
+      }
       clearInterval(t2);
     }
     else {
@@ -137,8 +137,9 @@ function countDown(duration){
       else {
         --roundTimer;
         countDownElement.textContent='00:'+roundTimer;
-      }   
-    
+        timePoints=roundTimer;
+      }
+    }
   },1000);
 }
 
@@ -173,6 +174,8 @@ function changeScore(lengthOfWord) {
   if (gameOver){
     gameOverScreen.classList.remove('hidden');
     winnerStatment();
+    clearInterval(t1);
+    clearInterval(t2);
   }
 }
 
@@ -196,13 +199,8 @@ form.addEventListener('submit',function(event){
     insertError(errorString);
     clearsInput();
     success=true;
-    console.log('is not broke');
-  
   }
   else{
-    console.log(input);
-    console.log('something is broke');
-    console.log(letter);
     errorString = errorMesssage(input);
     insertError(errorString);
   }
