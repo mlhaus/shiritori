@@ -199,6 +199,13 @@ input {
   margin: 5px;
 }
 
+.namePlate{
+  font-family: 'Kaushan Script', cursive;
+  font-size:1.8em;
+  background-color:#2B2D42;
+  color: #EDF2F4;
+}
+
 main {
   max-width: 960px;
   margin: 20px auto;
