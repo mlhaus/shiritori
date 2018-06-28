@@ -59,6 +59,7 @@ function Player (name, profilePic) {
   this.name = name;
   this.highScore = 0;
   this.profilePic = profilePic || 'img/no-image.jpg';
+  this.longest = "";
 
   Game.players.push (this);
 }
@@ -183,7 +184,6 @@ function listIncludes(input) {
   var result = listOfWords.filter(item => item.word === input);
   return result.length > 0;
 }
-
 var form= document.querySelector('form');
 form.addEventListener('submit',function(event){
   event.preventDefault();
@@ -193,6 +193,10 @@ form.addEventListener('submit',function(event){
     Game.wordsTyped.push(input);
     letter=input.charAt(input.length-1);
     userWord.setAttribute('placeholder', letter);
+    if (currentPlayer.longest.length < input.length) {
+      currentPlayer.longest = input;
+      console.log(currentPlayer.longest.length);
+    }
     listMaker5000(input);
     changeScore(input.length);
     var errorString = '';
