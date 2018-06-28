@@ -1,9 +1,10 @@
 'use strict';
 var dict;
 var isPaused;
-var currentTime;
 var gameTimer;
 var roundTimer;
+var currentGameTime;
+var currentRoundTime;
 var minutes;
 var seconds;
 var gameTimerElement = document.querySelector('#time');
@@ -15,11 +16,8 @@ var player1;
 var player2;
 var currentPlayer;
 var letter;
-var currentCountDown;
 var timePoints;
 var success;
-var t1;
-var t2;
 var userWord = document.getElementById('word');
 var welcomeScreen = document.getElementById('welcome');
 var pauseScreen = document.getElementById('pause');
@@ -76,28 +74,44 @@ function isGameOver (){
 }
 
 
-function startTimer(duration) {
-  gameTimer = duration;
-  t1 = setInterval(function () {
+function timer(gameTime, roundTime) {
+  gameTimer = gameTime;
+  roundTimer = roundTime;
+  var t = setInterval(function () {
+    console.log('Spot 1: ' + gameTimer + ' ' + roundTimer);
     if (gameTimer <= 0) {
       endTime();
-      clearInterval(t2);
-      clearInterval(t1);
+      clearInterval(t);
+    }
+    else if (roundTimer <= 0 || success===true || isGameOver()){
+      console.log('Spot 2: ' + gameTimer + ' ' + roundTimer);
+      if(roundTimer<=0){
+        listMaker5000('PASS');
+      }
+      if(!isGameOver()){
+        switchPlayer();
+      }
+      currentGameTime = gameTimer;
+      console.log('Spot 3: ' + gameTimer + ' ' + roundTimer);
+      clearInterval(t);
     }
     else {
       if (isPaused === true) {
-        currentTime = gameTimer;
-        clearInterval(t1);
+        currentGameTime = gameTimer;
+        currentRoundTime = roundTimer;
+        clearInterval(t);
       }
       else {
         --gameTimer;
         minutes = parseInt(gameTimer / 60);
         seconds = parseInt(gameTimer % 60);
-
         minutes = minutes < 10 ? '0' + minutes : minutes;
         seconds = seconds < 10 ? '0' + seconds : seconds;
-
         gameTimerElement.textContent = minutes + ':' + seconds;
+
+        --roundTimer;
+        countDownElement.textContent=roundTimer;
+        timePoints=roundTimer;
       }
     }
   }, 1000);
@@ -107,6 +121,7 @@ function endTime() {
   gameOverScreen.classList.remove('hidden');
   winnerStatment();
 }
+
 function winnerStatment(){
   if (game.scores[0] > game.scores[1]) {
     var winnerString = 'Player 1 Wins';
@@ -118,32 +133,6 @@ function winnerStatment(){
     winnerString = 'It\'s a Tie';
   }
   winner.textContent = winnerString;
-}
-
-function countDown(duration){
-  roundTimer = duration;
-  t2 = setInterval(function(){
-    if(roundTimer <= 0 || success===true || isGameOver()){
-      if(roundTimer<=0){
-        listMaker5000('PASS');
-      }
-      if(!isGameOver()){
-        switchPlayer();
-      }
-      clearInterval(t2);
-    }
-    else {
-      if(isPaused===true){
-        currentCountDown=roundTimer;
-        clearInterval(t2);
-      }
-      else {
-        --roundTimer;
-        countDownElement.textContent='00:'+roundTimer;
-        timePoints=roundTimer;
-      }
-    }
-  },1000);
 }
 
 function switchPlayer() {
@@ -159,9 +148,16 @@ function switchPlayer() {
     clearsInput();
   }
   success = false;
-  currentCountDown = 15;
-  countDownElement.textContent='00:'+currentCountDown;
-  countDown(currentCountDown);
+  --gameTimer;
+  minutes = parseInt(gameTimer / 60);
+  seconds = parseInt(gameTimer % 60);
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+  seconds = seconds < 10 ? '0' + seconds : seconds;
+  gameTimerElement.textContent = minutes + ':' + seconds;
+  currentRoundTime = 15;
+  countDownElement.textContent=currentRoundTime;
+  console.log('Spot 4: ' + gameTimer + ' ' + roundTimer);
+  timer(gameTimer, currentRoundTime);
 }
 
 function changeScore(lengthOfWord) {
@@ -177,8 +173,6 @@ function changeScore(lengthOfWord) {
   if (gameOver){
     gameOverScreen.classList.remove('hidden');
     winnerStatment();
-    clearInterval(t1);
-    clearInterval(t2);
   }
 }
 
@@ -232,7 +226,7 @@ form.addEventListener('submit',function(event){
 function listMaker5000(input){
   var ul;
   if(currentPlayer===player1){
-    ul=document.getElementById('player1words'); 
+    ul=document.getElementById('player1words');
   }
   if(currentPlayer===player2){
     ul=document.getElementById('player2words');
@@ -274,7 +268,6 @@ function playGame() {
   Game.wordsTyped = [];
   p1ScoreElement.lastElementChild.textContent = game.scores[0];
   p2ScoreElement.lastElementChild.textContent = game.scores[1];
-  console.log(document.getElementById('player1Name'));
   player1 = new Player(player1Name.value);
   player2 = new Player(player2Name.value);
   p1ScoreElement.firstElementChild.textContent= player1.name;
@@ -295,16 +288,13 @@ function playGame() {
   gameOverScreen.classList.add('hidden');
   gameTimer = 300;
   roundTimer = 15;
-  clearInterval(t1);
-  clearInterval(t2);
   minutes = parseInt(gameTimer / 60);
   seconds = parseInt(gameTimer % 60);
   minutes = minutes < 10 ? '0' + minutes : minutes;
   seconds = seconds < 10 ? '0' + seconds : seconds;
   gameTimerElement.textContent = minutes + ':' + seconds;
-  countDownElement.textContent='00:'+roundTimer;
-  startTimer(gameTimer);
-  countDown(roundTimer);
+  countDownElement.textContent=roundTimer;
+  timer(gameTimer, roundTimer);
 }
 
 
@@ -315,8 +305,7 @@ function pauseGame() {
 
 function continueGame(){
   isPaused = false;
-  startTimer(currentTime);
-  countDown(currentCountDown);
+  timer(currentGameTime, currentRoundTime);
   pauseScreen.classList.add('hidden');
 }
 
