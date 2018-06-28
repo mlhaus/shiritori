@@ -50,7 +50,6 @@ function getFakeWords() {
   return arr;
 }
 
-
 //Constructors for player, game, dictionary, settings
 function Game (dictionary) {
   this.scores = [0, 0];
@@ -76,6 +75,7 @@ function Dictionary (name) {
 function isGameOver (){
   return game.scores[0] >= minScoreToWin || game.scores[1] >= minScoreToWin;
 }
+
 
 
 function startTimer(duration) {
@@ -108,6 +108,7 @@ function startTimer(duration) {
 function endTime() {
   gameOverScreen.classList.remove('hidden');
   winnerStatment();
+
 }
 function winnerStatment(){
   if (game.scores[0] > game.scores[1]) {
@@ -181,6 +182,15 @@ function changeScore(lengthOfWord) {
     winnerStatment();
     clearInterval(t1);
     clearInterval(t2);
+    highScore();
+  }
+}
+
+function highScore() {
+  if (game.scores[0] > minScoreToWin) {
+    var tableRow = [player1Name.value, new Date().getDate, gameTimer, player1.longest];
+    console.log(tableRow);
+    // localStorage["highScore"]
   }
 }
 
@@ -327,6 +337,7 @@ function toggleSettings(){
     toggled=false;
   }
 }
+
 
 function pauseGame() {
   pauseScreen.classList.remove('hidden');
