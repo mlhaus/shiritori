@@ -16,6 +16,7 @@ var player2;
 var currentPlayer;
 var letter;
 var currentCountDown;
+
 var success;
 var t1;
 var t2;
@@ -30,6 +31,8 @@ var pauseButton = document.getElementById('pauseButton');
 var p1ScoreElement = document.getElementById('player1Score');
 var p2ScoreElement = document.getElementById('player2Score');
 var winner = document.getElementById('winner');
+var p1WordsUsedElement = document.getElementById('player1words');
+var p2WordsUsedElement = document.getElementById('player2words');
 
 
 function getFakeWords() {
@@ -67,7 +70,6 @@ function Dictionary (name) {
 
 function isGameOver (){
   return game.scores[0] >= minScoreToWin || game.scores[1] >= minScoreToWin;
-  //TODO  Determine if the timer is expired
 }
 
 
@@ -100,6 +102,9 @@ function startTimer(duration) {
 
 function endTime() {
   gameOverScreen.classList.remove('hidden');
+  winnerStatment();
+}
+function winnerStatment(){
   if (game.scores[0] > game.scores[1]) {
     var winnerString = 'Player 1 Wins';
   }
@@ -111,11 +116,16 @@ function endTime() {
   }
   winner.textContent = winnerString;
 }
+function passMessage() {
+  var inputWordString = 'PASS';
+  listMaker5000(inputWordString);
+}
 
 function countDown(duration){
   roundTimer = duration;
   t2 = setInterval(function(){
     if(roundTimer <= 0 || success===true){
+      timePoints=roundTimer;
       switchPlayer();
       clearInterval(t2);
     }
@@ -127,8 +137,8 @@ function countDown(duration){
       else {
         --roundTimer;
         countDownElement.textContent='00:'+roundTimer;
-      }
-    }
+      }   
+    
   },1000);
 }
 
@@ -137,10 +147,12 @@ function switchPlayer() {
     currentPlayer = player2;
     p2ScoreElement.classList.add('current');
     p1ScoreElement.classList.remove('current');
+    clearsInput();
   } else {
     currentPlayer = player1;
     p2ScoreElement.classList.remove('current');
     p1ScoreElement.classList.add('current');
+    clearsInput();
   }
   success = false;
   currentCountDown = 15;
@@ -151,15 +163,16 @@ function switchPlayer() {
 function changeScore(lengthOfWord) {
   // TODO ADD THE SECONDS REMAINING TO PARAMETER LIST
   if(currentPlayer === player1) {
-    game.scores[0] += lengthOfWord - minNumbCharacters;
+    game.scores[0] += lengthOfWord - minNumbCharacters + timePoints;
     p1ScoreElement.lastElementChild.textContent = game.scores[0];
   } else {
-    game.scores[1] += lengthOfWord - minNumbCharacters;
+    game.scores[1] += lengthOfWord - minNumbCharacters + timePoints;
     p2ScoreElement.lastElementChild.textContent = game.scores[1];
   }
   var gameOver = isGameOver();
   if (gameOver){
     gameOverScreen.classList.remove('hidden');
+    winnerStatment();
   }
 }
 
@@ -184,6 +197,7 @@ form.addEventListener('submit',function(event){
     clearsInput();
     success=true;
     console.log('is not broke');
+  
   }
   else{
     console.log(input);
@@ -246,6 +260,8 @@ function playGame() {
   currentPlayer = player1;
   p2ScoreElement.classList.remove('current');
   p1ScoreElement.classList.add('current');
+  p1WordsUsedElement.textContent = '';
+  p2WordsUsedElement.textContent = '';
   minNumbCharacters = 3;
   minScoreToWin = 100;
   letter = dict.alphabet[Math.floor(Math.random() * dict.alphabet.length)];
@@ -266,6 +282,7 @@ function playGame() {
   startTimer(gameTimer);
   countDown(roundTimer);
 }
+
 
 function pauseGame() {
   pauseScreen.classList.remove('hidden');
