@@ -186,15 +186,21 @@ function changeScore(lengthOfWord) {
   }
 }
 
-var d = new Date();
-var string = d.toLocaleDateString();
+
 
 function highScore() {
+  var d = new Date();
+  var dateString = d.toLocaleDateString();
+  var hsTable = JSON.parse(localStorage["highScore"]) || [];
   if (game.scores[0] > minScoreToWin) {
-    var tableRow = [player1Name.value, string, gameTimer, player1.longest];
-    console.log(tableRow);
-    // localStorage["highScore"]
+    var tableRow = [player1Name.value, dateString, gameTimer, player1.longest];   
+    hsTable.push(tableRow);
+    localStorage["highScore"] = JSON.stringify(hsTable);
+  } if (game.scores[1] > minScoreToWin) {
+    tableRow = [player2Name.value, dateString, gameTimer, player2.longest];
+    localStorage["highScore"] = JSON.stringify(tableRow);
   }
+
 }
 
 function listIncludes(input) {
