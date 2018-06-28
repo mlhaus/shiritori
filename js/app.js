@@ -75,14 +75,14 @@ function startTimer(duration) {
   gameTimer = duration;
   t1 = setInterval(function () {
     if (gameTimer <= 0) {
-      clearInterval(t1);
-      clearInterval(t2);
       endTime();
+      clearInterval(t2);
+      clearInterval(t1);
     }
     else {
       if (isPaused === true) {
-        clearInterval(t1);
         currentTime = gameTimer;
+        clearInterval(t1);
       }
       else {
         --gameTimer;
@@ -116,13 +116,13 @@ function countDown(duration){
   roundTimer = duration;
   t2 = setInterval(function(){
     if(roundTimer <= 0 || success===true){
-      clearInterval(t2);
       switchPlayer();
+      clearInterval(t2);
     }
     else {
       if(isPaused===true){
-        clearInterval(t2);
         currentCountDown=roundTimer;
+        clearInterval(t2);
       }
       else {
         --roundTimer;
@@ -273,6 +273,7 @@ function pauseGame() {
 }
 
 function continueGame(){
+  isPaused = false;
   startTimer(currentTime);
   countDown(currentCountDown);
   pauseScreen.classList.add('hidden');
