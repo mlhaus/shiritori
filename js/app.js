@@ -2,7 +2,11 @@
 var dict;
 var isPaused;
 var currentTime;
-var display;
+var timer;
+var minutes;
+var seconds;
+var gameTimerElement = document.querySelector('#time');
+var countDownElement = document.getElementById('countDown');
 var minNumbCharacters;
 var minScoreToWin;
 var game;
@@ -11,7 +15,7 @@ var player2;
 var currentPlayer;
 var letter;
 var currentCountDown;
-var success=false;
+var success;
 var userWord = document.getElementById('word');
 var welcomeScreen = document.getElementById('welcome');
 var pauseScreen = document.getElementById('pause');
@@ -64,25 +68,26 @@ function isGameOver (){
 }
 
 
-function startTimer(duration, display) {
-  var timer = duration, minutes, seconds;
+function startTimer(duration) {
+  timer = duration;
   isPaused = false;
   var t = setInterval(function () {
-    minutes = parseInt(timer / 60, 10);
-    seconds = parseInt(timer % 60, 10);
+    if (--timer < 0) {
+      clearInterval(t);
+      endTime();
+    }
+    minutes = parseInt(timer / 60);
+    seconds = parseInt(timer % 60);
 
     minutes = minutes < 10 ? '0' + minutes : minutes;
     seconds = seconds < 10 ? '0' + seconds : seconds;
 
-    display.textContent = minutes + ':' + seconds;
+    gameTimerElement.textContent = minutes + ':' + seconds;
 
     if (isPaused === true) {
-      clearInterval(t);
       currentTime = timer;
-    }
-    else if (--timer < 0) {
+      console.log(currentTime + " " + timer);
       clearInterval(t);
-      endTime();
     }
   }, 1000);
 }
@@ -105,16 +110,16 @@ function countDown(time){
   success=false;
   isPaused=false;
   var countDownInterval=window.setInterval(function(){
-    document.getElementById('countDown').textContent='00:'+time;
-    if(isPaused===true){
-      clearInterval(countDownInterval);
-      currentCountDown=time;
-    }
-    else if(success===true){
+    if(--time<0){
       clearInterval(countDownInterval);
       switchPlayer();
     }
-    else if(--time<0){
+    countDownElement.textContent='00:'+time;
+    if(isPaused===true){
+      currentCountDown=time;
+      clearInterval(countDownInterval);
+    }
+    else if(success===true){
       clearInterval(countDownInterval);
       switchPlayer();
     }
@@ -234,27 +239,43 @@ function playGame() {
   p1ScoreElement.classList.add('current');
   minNumbCharacters = 3;
   minScoreToWin = 100;
+  currentCountDown = 15;
   letter = dict.alphabet[Math.floor(Math.random() * dict.alphabet.length)];
   userWord.setAttribute('placeholder', letter);
   welcomeScreen.classList.add('hidden');
   pauseScreen.classList.add('hidden');
   gameOverScreen.classList.add('hidden');
-  var fiveMinutes = 60 * 5;
-  display = document.querySelector('#time');
-  startTimer(fiveMinutes, display);
-  countDown(15);
+  timer = 300;
+  minutes = parseInt(timer / 60);
+  seconds = parseInt(timer % 60);
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+  seconds = seconds < 10 ? '0' + seconds : seconds;
+  gameTimerElement.textContent = minutes + ':' + seconds;
+  countDownElement.textContent='00:'+currentCountDown;
+  startTimer(timer);
+  countDown(currentCountDown);
 }
 
 function pauseGame() {
+  console.log(currentTime + " " + currentCountDown);
   pauseScreen.classList.remove('hidden');
   isPaused = true;
+  var minutes, seconds;
+  minutes = parseInt(++currentTime / 60);
+  seconds = parseInt(currentTime % 60);
+
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+  seconds = seconds < 10 ? '0' + seconds : seconds;
+
+  gameTimerElement.textContent = minutes + ':' + seconds;
+  
+  countDownElement.textContent='00:'+(++currentCountDown);
 }
 
 function continueGame(){
-  pauseScreen.classList.add('hidden');
-  display = document.querySelector('#time');
-  startTimer(currentTime, display);
+  startTimer(currentTime);
   countDown(currentCountDown);
+  pauseScreen.classList.add('hidden');
 }
 
 function initialize() {
