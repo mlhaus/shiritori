@@ -230,18 +230,16 @@ form.addEventListener('submit',function(event){
 });
 
 function listMaker5000(input){
+  var ul;
   if(currentPlayer===player1){
-    var ul=document.getElementById('player1words');
-    var li=document.createElement('li');
-    li.textContent=input;
-    ul.appendChild(li);
+    ul=document.getElementById('player1words'); 
   }
   if(currentPlayer===player2){
     ul=document.getElementById('player2words');
-    li=document.createElement('li');
-    li.textContent=input;
-    ul.appendChild(li);
   }
+  var li=document.createElement('li');
+  li.textContent=input;
+  ul.insertBefore(li, ul.firstChild);
 }
 
 function errorMesssage(input){

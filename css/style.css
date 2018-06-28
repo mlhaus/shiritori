@@ -125,6 +125,15 @@ main .col h4 {
   padding-top: 10px;
 }
 
+main .row:last-of-type section:first-of-type ul,
+main .row:last-of-type section:last-of-type ul {
+  height: 250px;
+  line-height: 25px;
+  overflow-y: scroll;
+  font-size: 1.5em;
+  vertical-align: top;
+}
+
 footer {
   background-color: #2B2D42;
   padding: 10px;
