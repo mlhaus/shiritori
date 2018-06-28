@@ -2,7 +2,12 @@
 var dict;
 var isPaused;
 var currentTime;
-var display;
+var gameTimer;
+var roundTimer;
+var minutes;
+var seconds;
+var gameTimerElement = document.querySelector('#time');
+var countDownElement = document.getElementById('countDown');
 var minNumbCharacters;
 var minScoreToWin;
 var game;
@@ -11,8 +16,10 @@ var player2;
 var currentPlayer;
 var letter;
 var currentCountDown;
-var success=false;
-var timePoints;
+
+var success;
+var t1;
+var t2;
 var userWord = document.getElementById('word');
 var welcomeScreen = document.getElementById('welcome');
 var pauseScreen = document.getElementById('pause');
@@ -66,25 +73,29 @@ function isGameOver (){
 }
 
 
-function startTimer(duration, display) {
-  var timer = duration, minutes, seconds;
-  isPaused = false;
-  var t = setInterval(function () {
-    minutes = parseInt(timer / 60, 10);
-    seconds = parseInt(timer % 60, 10);
-
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-    seconds = seconds < 10 ? '0' + seconds : seconds;
-
-    display.textContent = minutes + ':' + seconds;
-
-    if (isPaused === true) {
-      clearInterval(t);
-      currentTime = timer;
-    }
-    else if (--timer < 0) {
-      clearInterval(t);
+function startTimer(duration) {
+  gameTimer = duration;
+  t1 = setInterval(function () {
+    if (gameTimer <= 0) {
       endTime();
+      clearInterval(t2);
+      clearInterval(t1);
+    }
+    else {
+      if (isPaused === true) {
+        currentTime = gameTimer;
+        clearInterval(t1);
+      }
+      else {
+        --gameTimer;
+        minutes = parseInt(gameTimer / 60);
+        seconds = parseInt(gameTimer % 60);
+
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+
+        gameTimerElement.textContent = minutes + ':' + seconds;
+      }
     }
   }, 1000);
 }
@@ -105,33 +116,29 @@ function winnerStatment(){
   }
   winner.textContent = winnerString;
 }
-
 function passMessage() {
   var inputWordString = 'PASS';
   listMaker5000(inputWordString);
 }
 
-console.log(passMessage)
-
-function countDown(time){
-  success=false;
-  isPaused=false;
-  var countDownInterval=window.setInterval(function(){
-    document.getElementById('countDown').textContent='00:'+time;
-    if(isPaused===true){
-      clearInterval(countDownInterval);
-      currentCountDown=time;
-    }
-    else if(success===true){
-      clearInterval(countDownInterval);
+function countDown(duration){
+  roundTimer = duration;
+  t2 = setInterval(function(){
+    if(roundTimer <= 0 || success===true){
+      timePoints=roundTimer;
       switchPlayer();
+      clearInterval(t2);
     }
-    else if(--time<0){
-      clearInterval(countDownInterval);
-      passMessage();
-      switchPlayer();
-    }
-    timePoints=time;
+    else {
+      if(isPaused===true){
+        currentCountDown=roundTimer;
+        clearInterval(t2);
+      }
+      else {
+        --roundTimer;
+        countDownElement.textContent='00:'+roundTimer;
+      }   
+    
   },1000);
 }
 
@@ -147,7 +154,10 @@ function switchPlayer() {
     p1ScoreElement.classList.add('current');
     clearsInput();
   }
-  countDown(15);
+  success = false;
+  currentCountDown = 15;
+  countDownElement.textContent='00:'+currentCountDown;
+  countDown(currentCountDown);
 }
 
 function changeScore(lengthOfWord) {
@@ -168,7 +178,7 @@ function changeScore(lengthOfWord) {
 
 function listIncludes(input) {
   var result = listOfWords.filter(item => item.word === input);
-  return [result.length > 0, result.index];
+  return result.length > 0;
 }
 
 var form= document.querySelector('form');
@@ -176,8 +186,7 @@ form.addEventListener('submit',function(event){
   event.preventDefault();
   var input=event.target.word.value;
   var inputResult = listIncludes(input);
-  if(inputResult[0]&&!Game.wordsTyped.includes(input)&&input.startsWith(letter)){
-    listOfWords.splice(inputResult[1],1);
+  if(inputResult&&!Game.wordsTyped.includes(input)&&input.startsWith(letter)){
     Game.wordsTyped.push(input);
     letter=input.charAt(input.length-1);
     userWord.setAttribute('placeholder', letter);
@@ -246,8 +255,8 @@ function playGame() {
   Game.wordsTyped = [];
   p1ScoreElement.lastElementChild.textContent = game.scores[0];
   p2ScoreElement.lastElementChild.textContent = game.scores[1];
-  player1 = new Player(name);
-  player2 = new Player(name);
+  player1 = new Player("Player 1");
+  player2 = new Player("Player 2");
   currentPlayer = player1;
   p2ScoreElement.classList.remove('current');
   p1ScoreElement.classList.add('current');
@@ -256,14 +265,22 @@ function playGame() {
   minNumbCharacters = 3;
   minScoreToWin = 100;
   letter = dict.alphabet[Math.floor(Math.random() * dict.alphabet.length)];
+  success = false;
+  isPaused = false;
   userWord.setAttribute('placeholder', letter);
   welcomeScreen.classList.add('hidden');
   pauseScreen.classList.add('hidden');
   gameOverScreen.classList.add('hidden');
-  var fiveMinutes = 60 * 5;
-  display = document.querySelector('#time');
-  startTimer(fiveMinutes, display);
-  countDown(15);
+  gameTimer = 300;
+  roundTimer = 15;
+  minutes = parseInt(gameTimer / 60);
+  seconds = parseInt(gameTimer % 60);
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+  seconds = seconds < 10 ? '0' + seconds : seconds;
+  gameTimerElement.textContent = minutes + ':' + seconds;
+  countDownElement.textContent='00:'+roundTimer;
+  startTimer(gameTimer);
+  countDown(roundTimer);
 }
 
 
@@ -273,10 +290,10 @@ function pauseGame() {
 }
 
 function continueGame(){
-  pauseScreen.classList.add('hidden');
-  display = document.querySelector('#time');
-  startTimer(currentTime, display);
+  isPaused = false;
+  startTimer(currentTime);
   countDown(currentCountDown);
+  pauseScreen.classList.add('hidden');
 }
 
 function initialize() {
