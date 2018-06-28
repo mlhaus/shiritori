@@ -142,6 +142,7 @@ function switchPlayer() {
     p2ScoreElement.classList.remove('current');
     p1ScoreElement.classList.add('current');
   }
+  success = false;
   currentCountDown = 15;
   countDownElement.textContent='00:'+currentCountDown;
   countDown(currentCountDown);
@@ -164,7 +165,7 @@ function changeScore(lengthOfWord) {
 
 function listIncludes(input) {
   var result = listOfWords.filter(item => item.word === input);
-  return [result.length > 0, result.index];
+  return result.length > 0;
 }
 
 var form= document.querySelector('form');
@@ -172,8 +173,7 @@ form.addEventListener('submit',function(event){
   event.preventDefault();
   var input=event.target.word.value;
   var inputResult = listIncludes(input);
-  if(inputResult[0]&&!Game.wordsTyped.includes(input)&&input.startsWith(letter)){
-    listOfWords.splice(inputResult[1],1);
+  if(inputResult&&!Game.wordsTyped.includes(input)&&input.startsWith(letter)){
     Game.wordsTyped.push(input);
     letter=input.charAt(input.length-1);
     userWord.setAttribute('placeholder', letter);
@@ -238,6 +238,7 @@ function insertError(errorString){
 
 function playGame() {
   game = new Game(dict);
+  Game.wordsTyped = [];
   p1ScoreElement.lastElementChild.textContent = game.scores[0];
   p2ScoreElement.lastElementChild.textContent = game.scores[1];
   player1 = new Player("Player 1");
