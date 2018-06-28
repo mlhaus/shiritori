@@ -29,6 +29,14 @@ body {
   background-color: rgba(237,242,244,0.95);
 }
 
+strong {
+  font-weight: bold;
+}
+
+i {
+  font-style: italic;
+}
+
 header {
   background-color: #2B2D42;
   padding: 10px;
@@ -125,6 +133,15 @@ main .col h4 {
   padding-top: 10px;
 }
 
+main .row:last-of-type section:first-of-type ul,
+main .row:last-of-type section:last-of-type ul {
+  height: 250px;
+  line-height: 25px;
+  overflow-y: scroll;
+  font-size: 1.5em;
+  vertical-align: top;
+}
+
 footer {
   background-color: #2B2D42;
   padding: 10px;
@@ -181,9 +198,32 @@ input {
   padding: 5px;
   margin: 5px;
 }
+
 .namePlate{
   font-family: 'Kaushan Script', cursive;
   font-size:1.8em;
   background-color:#2B2D42;
   color: #EDF2F4;
+}
+
+main {
+  max-width: 960px;
+  margin: 20px auto;
+}
+
+#instructions ul {
+  margin-left: 15px;
+}
+
+#instructions li {
+  list-style: disc;
+  line-height: 20px;
+  margin: 5px
+}
+
+main h2 {
+  font-family: 'Kaushan Script', cursive;
+  font-size: 2em;
+  color: #2b2d42;
+  text-align: center
 }

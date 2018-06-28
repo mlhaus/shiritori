@@ -74,10 +74,17 @@
     <div id="welcome" class="outer">
       <div class="inner">
         <h2>Welcome to Shiritori</h2>
-        <!-- Input names will go here-->
         <button class="playButton">PLAY</button>
         <button id="instructionsButton">Instructions</button>
         <button id="aboutUsButton">About Us</button>
+        <form>
+          <label><input type="checkbox" id="settingsToggle">Make custom game</label>
+          <label class="settings hidden"><p>Player 1 Name?</p><input type="text" id="player1Name" name="player1Name" placeholder="Player 1" value="Player 1"></label>
+          <label class="settings hidden"><p>Player 2 Name?</p><input type="text" id="player2Name" name="player2Name" placeholder="Player 2" value="Player 2">  </label>
+          <label class="settings hidden">Seconds/turn<input id="secPerTurn" type="number" min="5" step="1" placeholder="15" value="15"></label>
+          <label class="settings hidden">Minimum letters/word<input id="minCharRequired" type="number" min="1" step="1" placeholder="3" value="3"></label>
+          <label class="settings hidden">Score to win<input id="scoreToWin" type="number" min="1" step="1" placeholder="100" value="100"></label>
+        </form>
       </div>
     </div>
     <div id="pause" class="outer">
