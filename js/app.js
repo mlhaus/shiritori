@@ -3,6 +3,7 @@ var dict;
 var isPaused;
 var gameTimer;
 var roundTimer;
+var customRoundTimer;
 var currentGameTime;
 var currentRoundTime;
 var minutes;
@@ -81,13 +82,11 @@ function timer(gameTime, roundTime) {
   gameTimer = gameTime;
   roundTimer = roundTime;
   var t = setInterval(function () {
-    console.log('Spot 1: ' + gameTimer + ' ' + roundTimer);
     if (gameTimer <= 0) {
       endTime();
       clearInterval(t);
     }
     else if (roundTimer <= 0 || success===true || isGameOver()){
-      console.log('Spot 2: ' + gameTimer + ' ' + roundTimer);
       if(roundTimer<=0){
         listMaker5000('PASS');
       }
@@ -95,7 +94,6 @@ function timer(gameTime, roundTime) {
         switchPlayer();
       }
       currentGameTime = gameTimer;
-      console.log('Spot 3: ' + gameTimer + ' ' + roundTimer);
       clearInterval(t);
     }
     else {
@@ -157,9 +155,8 @@ function switchPlayer() {
   minutes = minutes < 10 ? '0' + minutes : minutes;
   seconds = seconds < 10 ? '0' + seconds : seconds;
   gameTimerElement.textContent = minutes + ':' + seconds;
-  currentRoundTime = 15;
+  currentRoundTime = customRoundTimer;
   countDownElement.textContent=currentRoundTime;
-  console.log('Spot 4: ' + gameTimer + ' ' + roundTimer);
   timer(gameTimer, currentRoundTime);
 }
 
@@ -291,14 +288,14 @@ function playGame() {
   pauseScreen.classList.add('hidden');
   gameOverScreen.classList.add('hidden');
   gameTimer = 300;
-  roundTimer = document.getElementById('secPerTurn').value;
+  customRoundTimer = document.getElementById('secPerTurn').value;
   minutes = parseInt(gameTimer / 60);
   seconds = parseInt(gameTimer % 60);
   minutes = minutes < 10 ? '0' + minutes : minutes;
   seconds = seconds < 10 ? '0' + seconds : seconds;
   gameTimerElement.textContent = minutes + ':' + seconds;
-  countDownElement.textContent=roundTimer;
-  timer(gameTimer, roundTimer);
+  countDownElement.textContent=customRoundTimer;
+  timer(gameTimer, customRoundTimer);
 }
 
 function toggleSettings(){
