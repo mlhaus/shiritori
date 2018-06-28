@@ -181,3 +181,25 @@ input {
   padding: 5px;
   margin: 5px;
 }
+
+main {
+  max-width: 960px;
+  margin: 20px auto;
+}
+
+#instructions ul {
+  margin-left: 15px;
+}
+
+#instructions li {
+  list-style: disc;
+  line-height: 20px;
+  margin: 5px
+}
+
+main h2 {
+  font-family: 'Kaushan Script', cursive;
+  font-size: 2em;
+  color: #2b2d42;
+  text-align: center
+}
