@@ -252,6 +252,24 @@ main h2 {
   text-align: center
 }
 
+table{
+  width:400px;
+  border:2px solid black;
+  margin:10px auto;
+}
+th{
+  font-weight:bold;
+  color:#EDF2F4;
+  background-color:#2b2d42;
+}
+tr:nth-child(odd){
+  background-color:rgb(213, 215, 216);
+}
+td{
+  text-align:center;
+  padding:10px;
+}
+
 .outer form {
   overflow: hidden;
 }
