@@ -296,8 +296,6 @@ function playGame() {
   currentPlayer = player1;
   p2ScoreElement.classList.remove('current');
   p1ScoreElement.classList.add('current');
-  console.log(p1WordsUsedElement.innerHTML);
-  console.log(p2WordsUsedElement.innerHTML);
   p1WordsUsedElement.innerHTML = '';
   p2WordsUsedElement.innerHTML = '';
   minNumbCharacters = document.getElementById('minCharRequired').value;
