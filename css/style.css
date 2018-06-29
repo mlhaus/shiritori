@@ -162,6 +162,11 @@ table#player2words th:nth-child(1) {
   width: 75%;
 }
 
+table#player1words tbody,
+table#player2words tbody {
+  
+}
+
 /* main .row:last-of-type section:first-of-type ul,
 main .row:last-of-type section:last-of-type ul {
   height: 250px;

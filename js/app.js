@@ -251,10 +251,10 @@ form.addEventListener('submit',function(event){
 function listMaker5000(input, pts){
   var tbody;
   if(currentPlayer===player1){
-    tbody=document.getElementById('player1words');
+    tbody=p1WordsUsedElement;
   }
   if(currentPlayer===player2){
-    tbody=document.getElementById('player2words');
+    tbody=p2WordsUsedElement;
   }
   var tr=document.createElement('tr');
   var td=document.createElement('td');
@@ -306,8 +306,10 @@ function playGame() {
   currentPlayer = player1;
   p2ScoreElement.classList.remove('current');
   p1ScoreElement.classList.add('current');
-  p1WordsUsedElement.textContent = '';
-  p2WordsUsedElement.textContent = '';
+  console.log(p1WordsUsedElement.innerHTML);
+  console.log(p2WordsUsedElement.innerHTML);
+  p1WordsUsedElement.innerHTML = '';
+  p2WordsUsedElement.innerHTML = '';
   minNumbCharacters = document.getElementById('minCharRequired').value;
   document.getElementById('word').minLength=minNumbCharacters;
   minScoreToWin = document.getElementById('scoreToWin').value;
