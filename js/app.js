@@ -234,7 +234,6 @@ form.addEventListener('submit',function(event){
     userWord.setAttribute('placeholder', letter);
     if (currentPlayer.longest.length < input.length) {
       currentPlayer.longest = input;
-      console.log(currentPlayer.longest.length)
     }
     var points = changeScore(input.length);
     listMaker5000(input, points);
@@ -258,7 +257,8 @@ function listMaker5000(input, pts){
     ul=document.getElementById('player2words');
   }
   var li=document.createElement('li');
-  li.textContent = input + '(+' + pts + ')';
+  var ptsTxt = pts ? pts : 0;
+  li.innerHTML = input + ' <span>+' + ptsTxt + '</span>';
   ul.insertBefore(li, ul.firstChild);
 }
 

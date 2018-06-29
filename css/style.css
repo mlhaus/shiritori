@@ -141,6 +141,22 @@ main .row:last-of-type section:last-of-type ul {
   font-size: 1.5em;
   vertical-align: top;
 }
+
+main .row:last-of-type section:first-of-type ul li,
+main .row:last-of-type section:last-of-type ul li {
+  border: 1px solid 
+}
+
+main .row:last-of-type section:first-of-type ul span,
+main .row:last-of-type section:last-of-type ul span {
+  background-color: rgba(217, 4, 39, 0.5);
+  color: #EDF2F4;
+  font-size: 15px;
+  padding: 4px;
+  line-height: 25px;
+  border-radius: 10px;
+}
+
 article {
   margin-bottom: 20px;
   width: 49%;
