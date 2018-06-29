@@ -37,8 +37,7 @@ var p2WordsUsedElement = document.getElementById('player2words');
 var player1Name= document.getElementById('player1Name');
 var player2Name= document.getElementById('player2Name');
 var instructionsButton = document.getElementById('instructionsButton');
-
-
+var aboutButton = document.getElementById('aboutUsButton');
 
 function getFakeWords() {
   var arr = [];
@@ -49,7 +48,6 @@ function getFakeWords() {
   }
   return arr;
 }
-
 
 //Constructors for player, game, dictionary, settings
 function Game (dictionary) {
@@ -64,7 +62,7 @@ function Player (name, profilePic) {
   this.name = name;
   this.highScore = 0;
   this.profilePic = profilePic || 'img/no-image.jpg';
-
+  this.longest = "";
   Game.players.push (this);
 }
 
@@ -76,6 +74,7 @@ function Dictionary (name) {
 function isGameOver (){
   return game.scores[0] >= minScoreToWin || game.scores[1] >= minScoreToWin;
 }
+
 
 
 function timer(gameTime, roundTime) {
@@ -121,6 +120,7 @@ function timer(gameTime, roundTime) {
 function endTime() {
   gameOverScreen.classList.remove('hidden');
   winnerStatment();
+
 }
 
 function winnerStatment(){
@@ -173,7 +173,25 @@ function changeScore(lengthOfWord) {
   if (gameOver){
     gameOverScreen.classList.remove('hidden');
     winnerStatment();
+    highScore();
   }
+}
+
+function highScore() {
+  var d = new Date();
+  var dateString = d.toLocaleDateString();
+  var hsTable = JSON.parse(localStorage.getItem('highScore')) || [];
+  if (game.scores[0] > minScoreToWin) {
+    var tableRow = [player1Name.value, dateString, gameTimer, player1.longest];
+    hsTable.push(tableRow);
+    localStorage["highScore"] = JSON.stringify(hsTable);
+  }
+  if (game.scores[1] > minScoreToWin) {
+    tableRow = [player2Name.value, dateString, gameTimer, player2.longest];
+    hsTable.push(tableRow);
+    localStorage["highScore"] = JSON.stringify(hsTable);
+  }
+
 }
 
 function listIncludes(input) {
@@ -205,11 +223,16 @@ var form= document.querySelector('form');
 form.addEventListener('submit',function(event){
   event.preventDefault();
   var input=event.target.word.value;
+  input = input.toLowerCase();
   var inputResult = listIncludes(input);
   if(inputResult&&!Game.wordsTyped.includes(input)&&input.startsWith(letter)){
     Game.wordsTyped.push(input);
     letter=input.charAt(input.length-1);
     userWord.setAttribute('placeholder', letter);
+    if (currentPlayer.longest.length < input.length) {
+      currentPlayer.longest = input;
+      console.log(currentPlayer.longest.length)
+    }
     listMaker5000(input);
     changeScore(input.length);
     var errorString = '';
@@ -317,6 +340,7 @@ function toggleSettings(){
   }
 }
 
+
 function pauseGame() {
   pauseScreen.classList.remove('hidden');
   isPaused = true;
@@ -330,6 +354,10 @@ function continueGame(){
 
 function loadInstructions(){
   location.href='instructions.html';
+}
+
+function loadAbout(){
+  location.href='about.html';
 }
 
 function initialize() {
@@ -349,4 +377,4 @@ window.addEventListener('load', initialize);
 
 playRestartNewButtons[2].addEventListener('click', playGame);
 instructionsButton.addEventListener('click', loadInstructions);
-
+aboutButton.addEventListener('click', loadAbout);
