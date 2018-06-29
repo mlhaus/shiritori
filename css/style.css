@@ -145,6 +145,20 @@ main .col h4 {
   padding-top: 10px;
 }
 
+.time h5 {
+  font-weight: bold;
+  font-size: 1.25em;
+  padding-bottom: 5px;
+}
+
+.time #time {
+  padding-bottom: 5px;
+}
+
+.time #time, .time #countDown {
+  font-size: 1em;
+}
+
 table#player1words, 
 table#player2words  {
   width: 100%;
