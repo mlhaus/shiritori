@@ -251,6 +251,11 @@ main h2 {
   color: #2b2d42;
   text-align: center
 }
+.customGames {
+  padding-left: 100px;
+  margin-top: 10px;
+
+}
 
 table{
   width:400px;
@@ -286,6 +291,6 @@ td{
   width: 150px;
 }
 
-.outer input {
-  /* float: left; */
+.inner .settings {
+  padding-right: 100px;
 }

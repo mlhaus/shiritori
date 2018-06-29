@@ -39,16 +39,6 @@ var player2Name= document.getElementById('player2Name');
 var instructionsButton = document.getElementById('instructionsButton');
 var aboutButton = document.getElementById('aboutUsButton');
 
-function getFakeWords() {
-  var arr = [];
-  for(var i = 97; i <= 122; i++) {
-    for(var j = 97; j <= 122; j++) {
-      arr.push(String.fromCharCode(i) + 'xx'+ String.fromCharCode(j));
-    }
-  }
-  return arr;
-}
-
 //Constructors for player, game, dictionary, settings
 function Game (dictionary) {
   this.scores = [0, 0];
@@ -360,6 +350,10 @@ function loadAbout(){
   location.href='about.html';
 }
 
+function loadHighScore() {
+  location.href = 'leaderboard.html';
+}
+
 function initialize() {
   welcomeScreen.classList.remove('hidden');
   pauseScreen.classList.add('hidden');
@@ -378,3 +372,4 @@ window.addEventListener('load', initialize);
 playRestartNewButtons[2].addEventListener('click', playGame);
 instructionsButton.addEventListener('click', loadInstructions);
 aboutButton.addEventListener('click', loadAbout);
+highScoreButton.addEventListener('click', loadHighScore);
