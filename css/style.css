@@ -106,7 +106,6 @@ main .row:last-of-type {
 }
 
 main .row .col {
-  border: 1px solid red;
   float: left;
   width: 32%;
   margin-left: 1%;
@@ -114,6 +113,7 @@ main .row .col {
   border-radius: 10px;
   border: 1px solid #8D99AE;
   text-align: center;
+  background-color: #EDF2F4;
 }
 
 main .row .col:last-of-type {
