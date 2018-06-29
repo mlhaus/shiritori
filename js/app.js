@@ -161,12 +161,12 @@ function switchPlayer() {
 }
 
 function changeScore(lengthOfWord) {
-  // TODO ADD THE SECONDS REMAINING TO PARAMETER LIST
+  var pointsEarned = lengthOfWord - minNumbCharacters + timePoints;
   if(currentPlayer === player1) {
-    game.scores[0] += lengthOfWord - minNumbCharacters + timePoints;
+    game.scores[0] += pointsEarned;
     p1ScoreElement.lastElementChild.textContent = game.scores[0];
   } else {
-    game.scores[1] += lengthOfWord - minNumbCharacters + timePoints;
+    game.scores[1] += pointsEarned;
     p2ScoreElement.lastElementChild.textContent = game.scores[1];
   }
   var gameOver = isGameOver();
@@ -174,6 +174,9 @@ function changeScore(lengthOfWord) {
     gameOverScreen.classList.remove('hidden');
     winnerStatment();
     highScore();
+  }
+  else {
+    return pointsEarned;
   }
 }
 
@@ -233,8 +236,8 @@ form.addEventListener('submit',function(event){
       currentPlayer.longest = input;
       console.log(currentPlayer.longest.length)
     }
-    listMaker5000(input);
-    changeScore(input.length);
+    var points = changeScore(input.length);
+    listMaker5000(input, points);
     var errorString = '';
     insertError(errorString);
     clearsInput();
@@ -246,7 +249,7 @@ form.addEventListener('submit',function(event){
   }
 });
 
-function listMaker5000(input){
+function listMaker5000(input, pts){
   var ul;
   if(currentPlayer===player1){
     ul=document.getElementById('player1words');
@@ -255,7 +258,7 @@ function listMaker5000(input){
     ul=document.getElementById('player2words');
   }
   var li=document.createElement('li');
-  li.textContent=input;
+  li.textContent = input + '(+' + pts + ')';
   ul.insertBefore(li, ul.firstChild);
 }
 
