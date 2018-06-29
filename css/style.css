@@ -133,7 +133,36 @@ main .col h4 {
   padding-top: 10px;
 }
 
-main .row:last-of-type section:first-of-type ul,
+table#player1words, table#player2words  {
+  width: 100%;
+}
+
+table#player1words th, 
+table#player1words td, 
+table#player2words th, 
+table#player2words td  {
+  border: 1px solid black;
+}
+
+table#totals{
+  width:400px;
+  border:2px solid black;
+  margin:10px auto;
+}
+table#totals th{
+  font-weight:bold;
+  color:#EDF2F4;
+  background-color:#2b2d42;
+}
+table#totals tr:nth-child(odd){
+  background-color:rgb(213, 215, 216);
+}
+table#totals td{
+  text-align:center;
+  padding:10px;
+}
+
+/* main .row:last-of-type section:first-of-type ul,
 main .row:last-of-type section:last-of-type ul {
   height: 250px;
   line-height: 25px;
@@ -155,7 +184,7 @@ main .row:last-of-type section:last-of-type ul span {
   padding: 4px;
   line-height: 25px;
   border-radius: 10px;
-}
+} */
 
 article {
   margin-bottom: 20px;
@@ -268,20 +297,20 @@ main h2 {
   text-align: center
 }
 
-table{
+table#totals{
   width:400px;
   border:2px solid black;
   margin:10px auto;
 }
-th{
+table#totals th{
   font-weight:bold;
   color:#EDF2F4;
   background-color:#2b2d42;
 }
-tr:nth-child(odd){
+table#totals tr:nth-child(odd){
   background-color:rgb(213, 215, 216);
 }
-td{
+table#totals td{
   text-align:center;
   padding:10px;
 }

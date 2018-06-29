@@ -32,8 +32,8 @@ var pauseButton = document.getElementById('pauseButton');
 var p1ScoreElement = document.getElementById('player1Score');
 var p2ScoreElement = document.getElementById('player2Score');
 var winner = document.getElementById('winner');
-var p1WordsUsedElement = document.getElementById('player1words');
-var p2WordsUsedElement = document.getElementById('player2words');
+var p1WordsUsedElement = document.querySelector('#player1words tbody');
+var p2WordsUsedElement = document.querySelector('#player2words tbody');
 var player1Name= document.getElementById('player1Name');
 var player2Name= document.getElementById('player2Name');
 var instructionsButton = document.getElementById('instructionsButton');
@@ -249,17 +249,22 @@ form.addEventListener('submit',function(event){
 });
 
 function listMaker5000(input, pts){
-  var ul;
+  var tbody;
   if(currentPlayer===player1){
-    ul=document.getElementById('player1words');
+    tbody=document.getElementById('player1words');
   }
   if(currentPlayer===player2){
-    ul=document.getElementById('player2words');
+    tbody=document.getElementById('player2words');
   }
-  var li=document.createElement('li');
+  var tr=document.createElement('tr');
+  var td=document.createElement('td');
+  td.textContent = input;
+  tr.appendChild(td);
+  td=document.createElement('td');
   var ptsTxt = pts ? pts : 0;
-  li.innerHTML = input + ' <span>+' + ptsTxt + '</span>';
-  ul.insertBefore(li, ul.firstChild);
+  td.innerHTML = ' <span>+' + ptsTxt + '</span>';
+  tr.appendChild(td);
+  tbody.insertBefore(tr, tbody.firstChild);
 }
 
 function errorMesssage(input){
