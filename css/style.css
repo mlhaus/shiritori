@@ -207,9 +207,17 @@ article {
   margin-bottom: 20px;
   width: 49%;
   float: left;
+  background-color: #EDF2F4;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
+
 article:first-of-type {
   margin-right: 1%;
+}
+
+article p {
+  padding: 0 10px 10px;
 }
 
 article h3 {
@@ -219,7 +227,7 @@ article h3 {
 
 article img {
   float: left;
-  margin-right: 10px;
+  margin: 0 10px 10px 10px;
 }
 
 article h3:before {
