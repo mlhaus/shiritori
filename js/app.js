@@ -37,8 +37,7 @@ var p2WordsUsedElement = document.getElementById('player2words');
 var player1Name= document.getElementById('player1Name');
 var player2Name= document.getElementById('player2Name');
 var instructionsButton = document.getElementById('instructionsButton');
-
-
+var aboutButton = document.getElementById('aboutUsButton');
 
 function getFakeWords() {
   var arr = [];
@@ -356,6 +355,10 @@ function loadInstructions(){
   location.href='instructions.html';
 }
 
+function loadAbout(){
+  location.href='about.html';
+}
+
 function initialize() {
   welcomeScreen.classList.remove('hidden');
   pauseScreen.classList.add('hidden');
@@ -373,4 +376,4 @@ window.addEventListener('load', initialize);
 
 playRestartNewButtons[2].addEventListener('click', playGame);
 instructionsButton.addEventListener('click', loadInstructions);
-
+aboutButton.addEventListener('click', loadAbout);
