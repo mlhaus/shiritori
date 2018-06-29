@@ -182,7 +182,7 @@ function highScore() {
   var dateString = d.toLocaleDateString();
   var hsTable = JSON.parse(localStorage.getItem('highScore')) || [];
   if (game.scores[0] > minScoreToWin) {
-    var tableRow = [player1Name.value, dateString, gameTimer, player1.longest];
+    var tableRow = [player1Name.value, dateString, Math.floor(gameTimer/60)+':'+gameTimer%60, player1.longest];
     hsTable.push(tableRow);
     localStorage["highScore"] = JSON.stringify(hsTable);
   }
