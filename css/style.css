@@ -142,24 +142,24 @@ table#player1words td,
 table#player2words th, 
 table#player2words td  {
   border: 1px solid black;
+  padding: 5px;
 }
 
-table#totals{
-  width:400px;
-  border:2px solid black;
-  margin:10px auto;
-}
-table#totals th{
+table#player1words th,
+table#player2words th {
   font-weight:bold;
   color:#EDF2F4;
   background-color:#2b2d42;
 }
-table#totals tr:nth-child(odd){
+
+table#player1words tr:nth-child(odd), 
+table#player2words tr:nth-child(odd) {
   background-color:rgb(213, 215, 216);
 }
-table#totals td{
-  text-align:center;
-  padding:10px;
+
+table#player1words th:nth-child(1),
+table#player2words th:nth-child(1) {  
+  width: 75%;
 }
 
 /* main .row:last-of-type section:first-of-type ul,
