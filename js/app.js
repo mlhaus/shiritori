@@ -180,15 +180,16 @@ function changeScore(lengthOfWord) {
 function highScore() {
   var d = new Date();
   var dateString = d.toLocaleDateString();
-  var hsTable = JSON.parse(localStorage["highScore"]) || [];
+  var hsTable = JSON.parse(localStorage.getItem('highScore')) || [];
   if (game.scores[0] > minScoreToWin) {
-    var tableRow = [player1Name.value, dateString, gameTimer, player1.longest];   
+    var tableRow = [player1Name.value, dateString, gameTimer, player1.longest];
     hsTable.push(tableRow);
     localStorage["highScore"] = JSON.stringify(hsTable);
   }
   if (game.scores[1] > minScoreToWin) {
     tableRow = [player2Name.value, dateString, gameTimer, player2.longest];
-    localStorage["highScore"] = JSON.stringify(tableRow);
+    hsTable.push(tableRow);
+    localStorage["highScore"] = JSON.stringify(hsTable);
   }
 
 }
