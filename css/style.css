@@ -227,3 +227,17 @@ main h2 {
   color: #2b2d42;
   text-align: center
 }
+
+.outer form {
+  overflow: hidden;
+}
+
+.outer label {
+  float: left;
+  width: 200px;
+  padding-right: 20px;
+}
+
+.outer input {
+  float: left;
+}
