@@ -30,7 +30,7 @@ body {
 
 #container {
   min-height: 100vh;
-  background-color: rgba(237,242,244,0.95);
+  background-color: rgba(237,242,244,0.75);
 }
 
 article .about {
@@ -268,7 +268,7 @@ input {
   position: absolute;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, .8);
+  background-color: rgba(0, 0, 0, .6);
   width: 100%;
   height: 100%;
 }
