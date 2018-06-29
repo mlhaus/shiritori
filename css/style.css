@@ -133,8 +133,14 @@ main .col h4 {
   padding-top: 10px;
 }
 
-table#player1words, table#player2words  {
+table#player1words, 
+table#player2words  {
   width: 100%;
+}
+
+table#player1words tr,
+table#player2words tr {
+  height: 25px;
 }
 
 table#player1words th, 
@@ -142,7 +148,7 @@ table#player1words td,
 table#player2words th, 
 table#player2words td  {
   border: 1px solid black;
-  padding: 5px;
+  padding: 4px;
 }
 
 table#player1words th,
@@ -162,34 +168,10 @@ table#player2words th:nth-child(1) {
   width: 75%;
 }
 
-table#player1words tbody,
-table#player2words tbody {
-  
-}
-
-/* main .row:last-of-type section:first-of-type ul,
-main .row:last-of-type section:last-of-type ul {
-  height: 250px;
-  line-height: 25px;
+.table-container {
+  height: 200px;
   overflow-y: scroll;
-  font-size: 1.5em;
-  vertical-align: top;
 }
-
-main .row:last-of-type section:first-of-type ul li,
-main .row:last-of-type section:last-of-type ul li {
-  border: 1px solid 
-}
-
-main .row:last-of-type section:first-of-type ul span,
-main .row:last-of-type section:last-of-type ul span {
-  background-color: rgba(217, 4, 39, 0.5);
-  color: #EDF2F4;
-  font-size: 15px;
-  padding: 4px;
-  line-height: 25px;
-  border-radius: 10px;
-} */
 
 article {
   margin-bottom: 20px;
