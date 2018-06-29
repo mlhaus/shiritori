@@ -133,14 +133,46 @@ main .col h4 {
   padding-top: 10px;
 }
 
-main .row:last-of-type section:first-of-type ul,
-main .row:last-of-type section:last-of-type ul {
-  height: 250px;
-  line-height: 25px;
-  overflow-y: scroll;
-  font-size: 1.5em;
-  vertical-align: top;
+table#player1words, 
+table#player2words  {
+  width: 100%;
 }
+
+table#player1words tr,
+table#player2words tr {
+  height: 25px;
+}
+
+table#player1words th, 
+table#player1words td, 
+table#player2words th, 
+table#player2words td  {
+  border: 1px solid black;
+  padding: 4px;
+}
+
+table#player1words th,
+table#player2words th {
+  font-weight:bold;
+  color:#EDF2F4;
+  background-color:#2b2d42;
+}
+
+table#player1words tr:nth-child(odd), 
+table#player2words tr:nth-child(odd) {
+  background-color:rgb(213, 215, 216);
+}
+
+table#player1words th:nth-child(1),
+table#player2words th:nth-child(1) {  
+  width: 75%;
+}
+
+.table-container {
+  height: 200px;
+  overflow-y: scroll;
+}
+
 article {
   margin-bottom: 20px;
   width: 49%;
@@ -259,20 +291,20 @@ main h2 {
 
 }
 
-table{
+table#totals{
   width:400px;
   border:2px solid black;
   margin:10px auto;
 }
-th{
+table#totals th{
   font-weight:bold;
   color:#EDF2F4;
   background-color:#2b2d42;
 }
-tr:nth-child(odd){
+table#totals tr:nth-child(odd){
   background-color:rgb(213, 215, 216);
 }
-td{
+table#totals td{
   text-align:center;
   padding:10px;
 }
