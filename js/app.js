@@ -223,6 +223,7 @@ var form= document.querySelector('form');
 form.addEventListener('submit',function(event){
   event.preventDefault();
   var input=event.target.word.value;
+  input = input.toLowerCase();
   var inputResult = listIncludes(input);
   if(inputResult&&!Game.wordsTyped.includes(input)&&input.startsWith(letter)){
     Game.wordsTyped.push(input);
